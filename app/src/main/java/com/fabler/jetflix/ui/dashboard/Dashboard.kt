@@ -167,7 +167,6 @@ fun JetFlixBottomNavigationItem(
   }
 }
 
-private val TextIconSpacing = 2.dp
 private val BottomNavigationItemPadding = Modifier.padding(horizontal = 8.dp, vertical = 8.dp)
 
 @Preview

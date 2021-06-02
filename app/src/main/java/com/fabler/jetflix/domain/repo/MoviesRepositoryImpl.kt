@@ -30,6 +30,7 @@ class MoviesRepositoryImpl(
       ).results.map { it.asDomainModel() }
       success(result)
     } catch (e: Exception) {
+      Timber.tag(TAG).e("Exception: ${e.message}")
       error(UnexpectedFailure)
     }
   }
@@ -44,7 +45,7 @@ class MoviesRepositoryImpl(
       ).asDomainModel()
       success(result)
     } catch (e: Exception) {
-      Timber.e("Exception: ${e.message}")
+      Timber.tag(TAG).e("Exception: ${e.message}")
       error(UnexpectedFailure)
     }
   }
