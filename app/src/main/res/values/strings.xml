@@ -1,0 +1,11 @@
+<resources>
+  <string name="app_name">JetFlix</string>
+
+  <!-- Dashboard Tabs -->
+  <string name="dashboard_home">Home</string>
+  <string name="dashboard_play">Play Something</string>
+  <string name="dashboard_coming_soon">Coming Soon</string>
+  <string name="dashboard_downloads">Downloads</string>
+
+  <string name="unexpected_error">An unexpected error occurred :(\nPlease try again</string>
+</resources>
