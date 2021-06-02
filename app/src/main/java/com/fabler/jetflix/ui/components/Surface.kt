@@ -13,12 +13,10 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.fabler.jetflix.ui.theme.JetFlixTheme
-import kotlin.math.ln
 
 /**
  * An alternative to [androidx.compose.material.Surface]
@@ -39,42 +37,11 @@ fun JetFlixSurface(
       .zIndex(elevation.value)
       .then(if (border != null) Modifier.border(border, shape) else Modifier)
       .background(
-        color = getBackgroundColorForElevation(color, elevation),
+        color = color,
         shape = shape
       )
       .clip(shape)
   ) {
     CompositionLocalProvider(LocalContentColor provides contentColor, content = content)
   }
-}
-
-@Composable
-private fun getBackgroundColorForElevation(
-  color: Color,
-  elevation: Dp
-): Color {
-  return if (elevation > 0.dp
-  ) {
-    color.withElevation(elevation)
-  } else {
-    color
-  }
-}
-
-/**
- * Applies a [Color.White] overlay to this color based on the [elevation]. This increases visibility
- * of elevation for surfaces in a dark theme.
- */
-private fun Color.withElevation(elevation: Dp): Color {
-  val foreground = calculateForeground(elevation)
-  return foreground.compositeOver(this)
-}
-
-/**
- * @return the alpha-modified [Color.White] to overlay on top of the surface color to produce
- * the resultant color.
- */
-private fun calculateForeground(elevation: Dp): Color {
-  val alpha = ((4.5f * ln(elevation.value + 1)) + 2f) / 20f
-  return Color.White.copy(alpha = alpha)
 }

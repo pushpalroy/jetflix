@@ -16,6 +16,7 @@ val DeepGreen = Color(0xff01875f)
 val DarkGreen = Color(0xff056449)
 val DarkGrey = Color(0xff121212)
 val AlmostBlack = Color(0xff030303)
+val Red =  Color(0xffd22f26)
 
 val Shadow11 = Color(0xff001787)
 val Shadow9 = Color(0xff0009b3)

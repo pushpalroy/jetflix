@@ -1,18 +1,29 @@
 package com.fabler.jetflix.ui.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.fabler.jetflix.domain.model.Movie
 import com.fabler.jetflix.domain.repo.movies
 import com.fabler.jetflix.ui.theme.JetFlixTheme
@@ -23,16 +34,35 @@ fun LargeMovieItem(
   onMovieSelected: (Long) -> Unit,
   modifier: Modifier = Modifier
 ) {
-  RoundedCornerRemoteImage(
-    imageUrl = movie.posterUrl,
-    modifier = modifier
-      .width(170.dp)
-      .height(320.dp)
-      .clickable(onClick = {
-        onMovieSelected(movie.id)
-      }),
-    cornerPercent = 3
-  )
+  ConstraintLayout {
+    // Create references for the composables to constrain
+    val (movieImage, topTrendingBanner) = createRefs()
+
+    RoundedCornerRemoteImage(
+      imageUrl = movie.posterUrl,
+      modifier = modifier
+        .width(170.dp)
+        .height(320.dp)
+        .clickable(onClick = {
+          onMovieSelected(movie.id)
+        })
+        .constrainAs(movieImage) {
+          top.linkTo(parent.top)
+        },
+      cornerPercent = 3
+    )
+    if (movie.avgVote >= 8) {
+      TopTrendingBanner(
+        modifier = modifier.constrainAs(topTrendingBanner) {
+          end.linkTo(movieImage.end)
+        },
+        width = 25.dp,
+        height = 32.dp,
+        fontSizeTitle = 8.sp,
+        fontSizeSubtitle = 14.sp
+      )
+    }
+  }
 }
 
 @Composable
@@ -41,16 +71,74 @@ fun SmallMovieItem(
   onMovieSelected: (Long) -> Unit,
   modifier: Modifier = Modifier
 ) {
-  RoundedCornerRemoteImage(
-    imageUrl = movie.posterUrl,
+  ConstraintLayout {
+    // Create references for the composables to constrain
+    val (movieImage, topTrendingBanner) = createRefs()
+    RoundedCornerRemoteImage(
+      imageUrl = movie.posterUrl,
+      modifier = modifier
+        .width(110.dp)
+        .height(150.dp)
+        .clickable(onClick = {
+          onMovieSelected(movie.id)
+        })
+        .constrainAs(movieImage) {
+          top.linkTo(parent.top)
+        },
+      cornerPercent = 3
+    )
+    if (movie.avgVote >= 8) {
+      TopTrendingBanner(
+        modifier = modifier.constrainAs(topTrendingBanner) {
+          end.linkTo(movieImage.end)
+        },
+        width = 20.dp,
+        height = 28.dp,
+        fontSizeTitle = 6.sp,
+        fontSizeSubtitle = 12.sp
+      )
+    }
+  }
+}
+
+@Composable
+fun TopTrendingBanner(
+  modifier: Modifier,
+  width: Dp,
+  height: Dp,
+  fontSizeTitle: TextUnit,
+  fontSizeSubtitle: TextUnit
+) {
+  Card(
+    color = JetFlixTheme.colors.banner,
+    shape = RoundedCornerShape(10),
     modifier = modifier
-      .width(110.dp)
-      .height(150.dp)
-      .clickable(onClick = {
-        onMovieSelected(movie.id)
-      }),
-    cornerPercent = 3
-  )
+      .size(
+        width = width,
+        height = height
+      )
+  ) {
+    Column(
+      modifier = Modifier
+        .padding(2.dp)
+        .fillMaxWidth(),
+      horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+      Text(
+        text = "TOP",
+        fontSize = fontSizeTitle,
+        style = MaterialTheme.typography.button,
+        maxLines = 1
+      )
+      Text(
+        text = "10",
+        fontSize = fontSizeSubtitle,
+        fontWeight = FontWeight.Bold,
+        style = MaterialTheme.typography.button,
+        maxLines = 1
+      )
+    }
+  }
 }
 
 @Composable

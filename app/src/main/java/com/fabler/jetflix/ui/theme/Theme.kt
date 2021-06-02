@@ -23,6 +23,7 @@ private val LightColorPalette = JetFlixColorPalette(
   appBackground = AlmostBlack,
   uiBackground = Neutral0,
   uiBorder = VeryLightGrey,
+  banner = Red,
   uiFloated = FunctionalGrey,
   textPrimary = TextPrimary,
   textSecondary = TextSecondary,
@@ -53,6 +54,7 @@ private val DarkColorPalette = JetFlixColorPalette(
   appBackground = AlmostBlack,
   uiBackground = DarkGrey,
   uiBorder = Neutral3,
+  banner = Red,
   uiFloated = FunctionalDarkGrey,
   textPrimary = Text,
   textSecondary = Neutral0,
@@ -124,6 +126,7 @@ class JetFlixColorPalette(
   appBackground: Color,
   uiBackground: Color,
   uiBorder: Color,
+  banner: Color,
   uiFloated: Color,
   interactivePrimary: List<Color> = gradient2_1,
   interactiveSecondary: List<Color> = gradient2_2,
@@ -169,6 +172,8 @@ class JetFlixColorPalette(
   var uiBackground by mutableStateOf(uiBackground)
     private set
   var uiBorder by mutableStateOf(uiBorder)
+    private set
+  var banner by mutableStateOf(banner)
     private set
   var uiFloated by mutableStateOf(uiFloated)
     private set

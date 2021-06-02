@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -121,7 +120,7 @@ private fun TopTrendingBanner(
     verticalAlignment = Alignment.CenterVertically
   ) {
     Card(
-      color = Color.Red,
+      color = JetFlixTheme.colors.banner,
       shape = RoundedCornerShape(10),
       modifier = modifier
         .size(
