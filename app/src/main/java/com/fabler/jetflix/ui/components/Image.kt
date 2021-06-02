@@ -12,12 +12,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.fabler.jetflix.ui.theme.JetFlixTheme
 import com.google.accompanist.coil.rememberCoilPainter
 
 @Composable
-fun CircularAppImage(
+fun CircularRemoteImage(
   imageUrl: String,
   modifier: Modifier = Modifier,
   elevation: Dp = 0.dp
@@ -61,7 +62,7 @@ fun CircularLocalImage(
 }
 
 @Composable
-fun RoundedCornerAppImage(
+fun RoundedCornerRemoteImage(
   imageUrl: String,
   modifier: Modifier = Modifier,
   cornerPercent: Int,
@@ -84,11 +85,35 @@ fun RoundedCornerAppImage(
   }
 }
 
+@Composable
+fun FullScreenRemoteImage(
+  imageUrl: String,
+  modifier: Modifier = Modifier
+) {
+  JetFlixSurface(
+    color = Color.DarkGray,
+    elevation = 0.dp,
+    shape = RectangleShape,
+    modifier = modifier
+  ) {
+    Image(
+      painter = rememberCoilPainter(
+        request = imageUrl
+      ),
+      contentScale = ContentScale.Crop,
+      modifier = Modifier.fillMaxSize(),
+      contentDescription = null
+    )
+  }
+}
+
+
+
 @Preview("Circular App Image")
 @Composable
-fun CircularAppImagePreview() {
-  JetFlixTheme(darkTheme = true) {
-    CircularAppImage(
+fun CircularRemoteImagePreview() {
+  JetFlixTheme {
+    CircularRemoteImage(
       imageUrl = "",
       modifier = Modifier
         .size(120.dp),
@@ -99,14 +124,26 @@ fun CircularAppImagePreview() {
 
 @Preview("Rounded Corner App Image")
 @Composable
-fun RoundedCornerAppImagePreview() {
-  JetFlixTheme(darkTheme = true) {
-    RoundedCornerAppImage(
+fun RoundedCornerRemoteImagePreview() {
+  JetFlixTheme {
+    RoundedCornerRemoteImage(
       imageUrl = "",
       modifier = Modifier
         .size(120.dp),
       cornerPercent = 5,
       elevation = 10.dp
+    )
+  }
+}
+
+@Preview("Full Screen Remote Image")
+@Composable
+fun FullScreenRemoteImagePreview() {
+  JetFlixTheme {
+    FullScreenRemoteImage(
+      imageUrl = "",
+      modifier = Modifier
+        .size(120.dp)
     )
   }
 }

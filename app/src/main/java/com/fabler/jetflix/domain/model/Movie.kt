@@ -6,6 +6,7 @@ data class Movie(
   val backDropUrl: String,
   val posterUrl: String,
   val genreIds: List<Int>,
+  val genres: List<String> = listOf(),
   val language: String,
   val title: String,
   val overview: String,

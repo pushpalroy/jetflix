@@ -8,6 +8,7 @@ import com.fabler.jetflix.util.Failure
 import com.fabler.jetflix.util.Failure.UnexpectedFailure
 import com.fabler.jetflix.util.error
 import com.fabler.jetflix.util.success
+import timber.log.Timber
 
 class MoviesRepositoryImpl(
   private val service: MoviesService
@@ -43,6 +44,7 @@ class MoviesRepositoryImpl(
       ).asDomainModel()
       success(result)
     } catch (e: Exception) {
+      Timber.e("Exception: ${e.message}")
       error(UnexpectedFailure)
     }
   }

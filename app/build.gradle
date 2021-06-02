@@ -83,6 +83,8 @@ dependencies {
   implementation Libs.Retrofit.retrofit
   implementation Libs.Retrofit.converterGson
 
+  implementation Libs.Logging.timber
+
   //  implementation Libs.Exoplayer.exoPlayer
   //  implementation Libs.Exoplayer.mediaSession
 

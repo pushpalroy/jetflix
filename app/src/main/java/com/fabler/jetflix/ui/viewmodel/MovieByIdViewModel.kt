@@ -22,13 +22,13 @@ class MovieByIdViewModel @Inject constructor(
     private set
 
   init {
-    fetchMovieById(movieId = 337404)
+    fetchMovieById(movieId = 503736)
   }
 
   private fun fetchMovieById(movieId: Long) {
     viewModelScope.launch {
       movie = Resource.Loading
-      val result = repository.getMovieById(id = movieId)
+      val result = repository.getMovieById(movieId = movieId)
       result.fold(
         { failure ->
           movie = Resource.Error(failure)

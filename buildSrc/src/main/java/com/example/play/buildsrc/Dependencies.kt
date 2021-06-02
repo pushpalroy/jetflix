@@ -110,4 +110,8 @@ object Libs {
       const val espressoCore = "androidx.test.espresso:espresso-core:3.2.0"
     }
   }
+
+  object Logging {
+    private val timber = "com.jakewharton.timber:timber:4.7.1"
+  }
 }

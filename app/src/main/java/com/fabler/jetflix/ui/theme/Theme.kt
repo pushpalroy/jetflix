@@ -20,6 +20,7 @@ private val LightColorPalette = JetFlixColorPalette(
   accent = DeepGreen,
   accentDark = DarkGreen,
   iconTint = Grey,
+  appBackground = AlmostBlack,
   uiBackground = Neutral0,
   uiBorder = VeryLightGrey,
   uiFloated = FunctionalGrey,
@@ -49,10 +50,11 @@ private val DarkColorPalette = JetFlixColorPalette(
   accent = DeepGreen,
   accentDark = DarkGreen,
   iconTint = Shadow1,
-  uiBackground = GreyBg,
+  appBackground = AlmostBlack,
+  uiBackground = DarkGrey,
   uiBorder = Neutral3,
   uiFloated = FunctionalDarkGrey,
-  textPrimary = Shadow0,
+  textPrimary = Text,
   textSecondary = Neutral0,
   textHelp = Neutral1,
   textInteractive = Neutral7,
@@ -119,6 +121,7 @@ class JetFlixColorPalette(
   accent: Color,
   accentDark: Color,
   iconTint: Color,
+  appBackground: Color,
   uiBackground: Color,
   uiBorder: Color,
   uiFloated: Color,
@@ -160,6 +163,8 @@ class JetFlixColorPalette(
   var accentDark by mutableStateOf(accentDark)
     private set
   var iconTint by mutableStateOf(iconTint)
+    private set
+  var appBackground by mutableStateOf(appBackground)
     private set
   var uiBackground by mutableStateOf(uiBackground)
     private set

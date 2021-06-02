@@ -12,6 +12,6 @@ interface MoviesRepository {
   ): Either<Failure, List<Movie>>
 
   suspend fun getMovieById(
-    id: Long
+    movieId: Long
   ): Either<Failure, Movie>
 }
