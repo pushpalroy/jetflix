@@ -41,18 +41,16 @@ fun HighlightMovieItem(
   onMovieSelected: (Long) -> Unit,
   modifier: Modifier = Modifier
 ) {
-  Box {
-    FullScreenRemoteImage(
-      imageUrl = movie.posterUrl,
-      modifier = modifier
-        .fillMaxWidth()
-        .height(600.dp)
-        .clickable(onClick = {
-          onMovieSelected(movie.id)
-        })
-        .applyGradient()
-    )
-  }
+  FullScreenRemoteImage(
+    imageUrl = movie.posterUrl,
+    modifier = modifier
+      .fillMaxWidth()
+      .height(550.dp)
+      .clickable(onClick = {
+        onMovieSelected(movie.id)
+      })
+      .applyGradient()
+  )
 }
 
 fun Modifier.applyGradient(): Modifier {

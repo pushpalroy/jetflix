@@ -84,6 +84,7 @@ object Libs {
       const val animation = "androidx.compose.animation:animation:${composeVer}"
       const val tooling = "androidx.compose.ui:ui-tooling:${composeVer}"
       const val iconsExtended = "androidx.compose.material:material-icons-extended:$composeVer"
+      const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha07"
 
       // Test rules and transitive dependencies
       const val uiTestJunit = "androidx.compose.ui:ui-test-junit4:$composeVer"
@@ -109,6 +110,10 @@ object Libs {
 
       const val espressoCore = "androidx.test.espresso:espresso-core:3.2.0"
     }
+  }
+
+  object ConstraintLayout {
+    const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
   }
 
   object Logging {

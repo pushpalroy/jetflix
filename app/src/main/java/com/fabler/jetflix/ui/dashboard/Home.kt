@@ -1,22 +1,41 @@
 package com.fabler.jetflix.ui.dashboard
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
+import com.fabler.jetflix.R
 import com.fabler.jetflix.domain.model.Movie
 import com.fabler.jetflix.domain.repo.movies
 import com.fabler.jetflix.ui.components.HighlightMovieItem
@@ -68,7 +87,106 @@ private fun TopHighlightedMovie(
   modifier: Modifier = Modifier,
   topMovie: Movie
 ) {
-  HighlightMovieItem(topMovie, onMovieClick, modifier)
+  ConstraintLayout {
+    // Create references for the composables to constrain
+    val (movieImage, buttonPanel) = createRefs()
+
+    HighlightMovieItem(topMovie, onMovieClick,
+      modifier = modifier.constrainAs(movieImage) {
+        top.linkTo(parent.top)
+      }
+    )
+    Row(
+      modifier = modifier
+        .constrainAs(buttonPanel) {
+          bottom.linkTo(parent.bottom, margin = 32.dp)
+        }
+    ) {
+      MyListButton(modifier = modifier.weight(1f))
+      PlayButton(isPressed = mutableStateOf(true), modifier = modifier.weight(1f))
+      InfoButton(modifier = modifier.weight(1f))
+    }
+  }
+}
+
+@Composable
+private fun MyListButton(
+  modifier: Modifier
+) {
+  Column(
+    horizontalAlignment = Alignment.CenterHorizontally,
+    modifier = modifier.selectable(selected = false, onClick = {})
+  ) {
+    Icon(
+      imageVector = Icons.Default.Check,
+      contentDescription = null
+    )
+    Spacer(modifier = Modifier.height(4.dp))
+    Text(
+      text = stringResource(R.string.my_list),
+      fontSize = 10.sp,
+      style = MaterialTheme.typography.button,
+      maxLines = 1
+    )
+  }
+}
+
+@Composable
+private fun InfoButton(
+  modifier: Modifier
+) {
+  Column(
+    horizontalAlignment = Alignment.CenterHorizontally,
+    modifier = modifier.selectable(selected = false, onClick = {})
+  ) {
+    Icon(
+      imageVector = Icons.Outlined.Info,
+      contentDescription = null
+    )
+    Spacer(modifier = Modifier.height(4.dp))
+    Text(
+      text = stringResource(R.string.info),
+      fontSize = 10.sp,
+      style = MaterialTheme.typography.button,
+      maxLines = 1
+    )
+  }
+}
+
+@Composable
+private fun PlayButton(
+  isPressed: MutableState<Boolean>,
+  modifier: Modifier
+) {
+  Button(
+    onClick = { isPressed.value = isPressed.value.not() },
+    colors = ButtonDefaults.buttonColors(
+      backgroundColor = Color.White
+    ),
+    shape = RoundedCornerShape(8),
+    modifier = modifier
+  )
+  {
+    Row(
+      verticalAlignment = Alignment.CenterVertically,
+    ) {
+      Icon(
+        imageVector = Icons.Default.PlayArrow,
+        tint = JetFlixTheme.colors.textInteractive,
+        contentDescription = null
+      )
+      Spacer(modifier = Modifier.width(4.dp))
+      Text(
+        text = stringResource(R.string.play),
+        fontSize = 16.sp,
+        fontWeight = FontWeight.SemiBold,
+        letterSpacing = (-0.05).sp,
+        color = JetFlixTheme.colors.textInteractive,
+        style = MaterialTheme.typography.button,
+        maxLines = 1
+      )
+    }
+  }
 }
 
 @Composable

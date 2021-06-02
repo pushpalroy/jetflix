@@ -70,6 +70,7 @@ dependencies {
   implementation Libs.AndroidX.Compose.animation
   implementation Libs.AndroidX.Compose.iconsExtended
   implementation Libs.AndroidX.Compose.tooling
+  implementation Libs.AndroidX.Compose.constraintLayout
 
   implementation Libs.Accompanist.systemuicontroller
   implementation Libs.Accompanist.coil
@@ -83,6 +84,7 @@ dependencies {
   implementation Libs.Retrofit.retrofit
   implementation Libs.Retrofit.converterGson
 
+  implementation Libs.ConstraintLayout.constraintLayout
   implementation Libs.Logging.timber
 
   //  implementation Libs.Exoplayer.exoPlayer
