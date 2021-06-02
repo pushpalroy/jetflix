@@ -16,6 +16,13 @@ interface MoviesService {
     @Query("api_key") apiKey: String,
   ): MoviesDto
 
+  @GET(MoviesApi.ENDPOINT_NOW_PLAYING)
+  suspend fun getNowPlayingMovies(
+    @Query("language") language: String,
+    @Query("page") page: Int,
+    @Query("api_key") apiKey: String,
+  ): MoviesDto
+
   @GET(MoviesApi.ENDPOINT_MOVIE)
   suspend fun getMovieById(
     @Path("movieId") movieId: Long,

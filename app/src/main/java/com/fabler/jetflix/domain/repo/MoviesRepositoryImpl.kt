@@ -35,6 +35,23 @@ class MoviesRepositoryImpl(
     }
   }
 
+  override suspend fun getNowPlayingMovies(
+    language: String,
+    page: Int
+  ): Either<Failure, List<Movie>> {
+    return try {
+      val result = service.getNowPlayingMovies(
+        language = language,
+        page = page,
+        apiKey = BuildConfig.API_KEY
+      ).results.map { it.asDomainModel() }
+      success(result)
+    } catch (e: Exception) {
+      Timber.tag(TAG).e("Exception: ${e.message}")
+      error(UnexpectedFailure)
+    }
+  }
+
   override suspend fun getMovieById(
     movieId: Long
   ): Either<Failure, Movie> {

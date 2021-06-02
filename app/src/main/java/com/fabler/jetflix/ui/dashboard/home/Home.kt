@@ -42,7 +42,7 @@ fun Home(
   ) {
     Column(
       modifier = modifier
-        .padding(bottom = 100.dp)
+        .padding(bottom = 120.dp)
         .verticalScroll(rememberScrollState())
     ) {
       when (val topHighlightedMovie = ViewModelProvider.movieByIdViewModel.movie) {
@@ -60,7 +60,17 @@ fun Home(
           JetFlixOriginals(
             onMovieClick = onMovieClick,
             modifier = modifier,
-            topRatedMovies = jetFlixOriginals.data
+            jetFlixOriginalMovies = jetFlixOriginals.data
+          )
+        }
+      }
+      Spacer(modifier = Modifier.height(20.dp))
+      when (val popularOnJetFlix = ViewModelProvider.nowPlayingMoviesViewModel.nowPlayingMovies) {
+        is Resource.Success -> {
+          PopularOnJetFlix(
+            onMovieClick = onMovieClick,
+            modifier = modifier,
+            popularOnJetFlixMovies = popularOnJetFlix.data
           )
         }
       }
@@ -120,7 +130,9 @@ private fun TopTrendingBanner(
         )
     ) {
       Column(
-        modifier = Modifier.padding(2.dp).fillMaxWidth(),
+        modifier = Modifier
+          .padding(2.dp)
+          .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
       ) {
         Text(
@@ -167,6 +179,16 @@ fun JetFlixOriginalsPreview() {
   JetFlixTheme(
     darkTheme = true
   ) {
-    JetFlixOriginals(onMovieClick = {}, topRatedMovies = movies)
+    JetFlixOriginals(onMovieClick = {}, jetFlixOriginalMovies = movies)
+  }
+}
+
+@Preview("Popular On JetFlix Preview")
+@Composable
+fun PopularOnJetFlixPreview() {
+  JetFlixTheme(
+    darkTheme = true
+  ) {
+    PopularOnJetFlix(onMovieClick = {}, popularOnJetFlixMovies = movies)
   }
 }

@@ -36,6 +36,24 @@ fun LargeMovieItem(
 }
 
 @Composable
+fun SmallMovieItem(
+  movie: Movie,
+  onMovieSelected: (Long) -> Unit,
+  modifier: Modifier = Modifier
+) {
+  RoundedCornerRemoteImage(
+    imageUrl = movie.posterUrl,
+    modifier = modifier
+      .width(110.dp)
+      .height(150.dp)
+      .clickable(onClick = {
+        onMovieSelected(movie.id)
+      }),
+    cornerPercent = 3
+  )
+}
+
+@Composable
 fun HighlightMovieItem(
   movie: Movie,
   onMovieSelected: (Long) -> Unit,
@@ -69,10 +87,22 @@ fun Modifier.applyGradient(): Modifier {
 
 @Preview("Large Movie Item")
 @Composable
-fun PlayAppItemPreview() {
+fun LargeMovieItemPreview() {
   JetFlixTheme {
     val movie = movies.first()
     LargeMovieItem(
+      movie = movie,
+      onMovieSelected = {}
+    )
+  }
+}
+
+@Preview("Small Movie Item")
+@Composable
+fun SmallMovieItemPreview() {
+  JetFlixTheme {
+    val movie = movies.first()
+    SmallMovieItem(
       movie = movie,
       onMovieSelected = {}
     )

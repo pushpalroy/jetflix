@@ -11,6 +11,11 @@ interface MoviesRepository {
     page: Int
   ): Either<Failure, List<Movie>>
 
+  suspend fun getNowPlayingMovies(
+    language: String,
+    page: Int
+  ): Either<Failure, List<Movie>>
+
   suspend fun getMovieById(
     movieId: Long
   ): Either<Failure, Movie>
