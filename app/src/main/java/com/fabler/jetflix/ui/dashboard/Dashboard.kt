@@ -41,6 +41,7 @@ import androidx.navigation.compose.rememberNavController
 import com.fabler.jetflix.R
 import com.fabler.jetflix.ui.anim.getIconTint
 import com.fabler.jetflix.ui.components.JetFlixSurface
+import com.fabler.jetflix.ui.dashboard.home.Home
 import com.fabler.jetflix.ui.theme.JetFlixTheme
 
 fun NavGraphBuilder.addDashboardGraph(

@@ -91,7 +91,7 @@ fun FullScreenRemoteImage(
   modifier: Modifier = Modifier
 ) {
   JetFlixSurface(
-    color = Color.DarkGray,
+    color = Color.LightGray,
     elevation = 0.dp,
     shape = RectangleShape,
     modifier = modifier

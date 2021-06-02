@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.fabler.jetflix.ui.theme.JetFlixTheme
 
 @Composable
-fun MovieCard(
+fun Card(
   modifier: Modifier = Modifier,
   shape: Shape = MaterialTheme.shapes.medium,
   color: Color = JetFlixTheme.colors.uiBackground,
