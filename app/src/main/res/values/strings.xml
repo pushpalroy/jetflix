@@ -10,5 +10,8 @@
   <string name="my_list">My List</string>
   <string name="play">Play</string>
   <string name="info">Info</string>
+  <string name="download">Download</string>
+  <string name="preview">Preview</string>
+  <string name="episodesAndInfo">Episodes &amp; Info</string>
   <string name="unexpected_error">An unexpected error occurred :(\nPlease try again</string>
 </resources>
