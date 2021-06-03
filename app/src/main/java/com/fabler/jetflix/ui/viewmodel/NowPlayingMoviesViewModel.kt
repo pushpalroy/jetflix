@@ -44,7 +44,7 @@ class NowPlayingMoviesViewModel @Inject constructor(
   fun fetchNowPlayingMovies() {
     viewModelScope.launch {
       nowPlayingMovies = Resource.Loading
-      val result = repository.getNowPlayingMovies(language = MoviesApi.LANG_ENG, page = 2)
+      val result = repository.getNowPlayingMovies(language = MoviesApi.LANG_ENG, page = (0..5).random())
       result.fold(
         { failure ->
           nowPlayingMovies = Resource.Error(failure)
