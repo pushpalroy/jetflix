@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.fabler.jetflix.ui.viewmodel.ViewModelProvider.nowPlayingMoviesViewModel
 
 object ViewModelProvider {
   val topRatedMoviesViewModel: TopRatedMoviesViewModel
@@ -18,6 +17,10 @@ object ViewModelProvider {
   val movieByIdViewModel: MovieByIdViewModel
     @Composable
     get() = LocalMovieByIdViewModel.current
+
+  val selectedMovieViewModel: SelectedMovieViewModel
+    @Composable
+    get() = LocalSelectedMovieViewModel.current
 }
 
 @Composable
@@ -25,6 +28,7 @@ fun ProvideMultiViewModel(content: @Composable () -> Unit) {
   val topRatedMoviesViewModel: TopRatedMoviesViewModel = viewModel()
   val nowPlayingMoviesViewModel: NowPlayingMoviesViewModel = viewModel()
   val movieByIdViewModel: MovieByIdViewModel = viewModel()
+  val selectedMovieViewModel: SelectedMovieViewModel = viewModel()
 
   CompositionLocalProvider(
     LocalTopRatedMoviesViewModel provides topRatedMoviesViewModel,
@@ -35,7 +39,11 @@ fun ProvideMultiViewModel(content: @Composable () -> Unit) {
       CompositionLocalProvider(
         LocalMovieByIdViewModel provides movieByIdViewModel
       ) {
-        content()
+        CompositionLocalProvider(
+          LocalSelectedMovieViewModel provides selectedMovieViewModel
+        ) {
+          content()
+        }
       }
     }
   }
@@ -51,4 +59,8 @@ private val LocalNowPlayingMoviesViewModel = staticCompositionLocalOf<NowPlaying
 
 private val LocalMovieByIdViewModel = staticCompositionLocalOf<MovieByIdViewModel> {
   error("No MovieByIdViewModel provided")
+}
+
+private val LocalSelectedMovieViewModel = staticCompositionLocalOf<SelectedMovieViewModel> {
+  error("No SelectedMovieViewModel provided")
 }

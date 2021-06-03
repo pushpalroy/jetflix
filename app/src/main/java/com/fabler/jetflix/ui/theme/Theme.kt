@@ -22,6 +22,8 @@ private val LightColorPalette = JetFlixColorPalette(
   iconTint = Grey,
   appBackground = AlmostBlack,
   uiBackground = Neutral0,
+  uiLightBackground = LightGrey2,
+  uiLighterBackground = LightGrey3,
   uiBorder = VeryLightGrey,
   banner = Red,
   uiFloated = FunctionalGrey,
@@ -53,6 +55,8 @@ private val DarkColorPalette = JetFlixColorPalette(
   iconTint = Shadow1,
   appBackground = AlmostBlack,
   uiBackground = DarkGrey,
+  uiLightBackground = LightGrey2,
+  uiLighterBackground = LightGrey3,
   uiBorder = Neutral3,
   banner = Red,
   uiFloated = FunctionalDarkGrey,
@@ -80,7 +84,7 @@ private val DarkColorPalette = JetFlixColorPalette(
 
 @Composable
 fun JetFlixTheme(
-  darkTheme: Boolean = isSystemInDarkTheme(),
+  darkTheme: Boolean = true,
   content: @Composable () -> Unit
 ) {
   val colors = if (darkTheme) DarkColorPalette else LightColorPalette
@@ -125,6 +129,8 @@ class JetFlixColorPalette(
   iconTint: Color,
   appBackground: Color,
   uiBackground: Color,
+  uiLightBackground: Color,
+  uiLighterBackground: Color,
   uiBorder: Color,
   banner: Color,
   uiFloated: Color,
@@ -170,6 +176,10 @@ class JetFlixColorPalette(
   var appBackground by mutableStateOf(appBackground)
     private set
   var uiBackground by mutableStateOf(uiBackground)
+    private set
+  var uiLightBackground by mutableStateOf(uiLightBackground)
+    private set
+  var uiLighterBackground by mutableStateOf(uiLighterBackground)
     private set
   var uiBorder by mutableStateOf(uiBorder)
     private set
@@ -264,7 +274,7 @@ private val LocalAppColor = staticCompositionLocalOf<JetFlixColorPalette> {
  */
 fun debugColors(
   darkTheme: Boolean,
-  debugColor: Color = Color.Red
+  debugColor: Color = Color.Transparent
 ) = Colors(
   primary = debugColor,
   primaryVariant = debugColor,

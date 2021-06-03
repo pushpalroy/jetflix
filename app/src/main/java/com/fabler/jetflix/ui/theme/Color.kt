@@ -15,6 +15,8 @@ val TextSecondary = Color(0xff5f6368)
 val DeepGreen = Color(0xff01875f)
 val DarkGreen = Color(0xff056449)
 val DarkGrey = Color(0xff121212)
+val LightGrey2 = Color(0xff2b2b2b)
+val LightGrey3 = Color(0xFF3F3F3F)
 val AlmostBlack = Color(0xff030303)
 val Red =  Color(0xffd22f26)
 

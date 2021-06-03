@@ -83,6 +83,7 @@ fun SmallMovieItem(
           onMovieSelected(movie.id)
         })
         .constrainAs(movieImage) {
+          start.linkTo(parent.start)
           top.linkTo(parent.top)
         },
       cornerPercent = 3
@@ -90,6 +91,7 @@ fun SmallMovieItem(
     if (movie.avgVote >= 8) {
       TopTrendingBanner(
         modifier = modifier.constrainAs(topTrendingBanner) {
+          top.linkTo(movieImage.top)
           end.linkTo(movieImage.end)
         },
         width = 20.dp,

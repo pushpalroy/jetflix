@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.material.BottomSheetScaffoldState
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -30,7 +32,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
@@ -43,13 +44,16 @@ import com.fabler.jetflix.ui.anim.getIconTint
 import com.fabler.jetflix.ui.components.JetFlixSurface
 import com.fabler.jetflix.ui.dashboard.home.Home
 import com.fabler.jetflix.ui.theme.JetFlixTheme
+import kotlinx.coroutines.CoroutineScope
 
+@ExperimentalMaterialApi
 fun NavGraphBuilder.addDashboardGraph(
-  onMovieSelected: (Long, NavBackStackEntry) -> Unit,
-  modifier: Modifier = Modifier
+  bottomSheetScaffoldState: BottomSheetScaffoldState,
+  modifier: Modifier = Modifier,
+  coroutineScope: CoroutineScope
 ) {
-  composable(DashboardSections.HOME.route) { from ->
-    Home(onMovieClick = { id -> onMovieSelected(id, from) }, modifier)
+  composable(DashboardSections.HOME.route) {
+    Home(bottomSheetScaffoldState, modifier, coroutineScope)
   }
 }
 

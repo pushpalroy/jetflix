@@ -1,19 +1,18 @@
 package com.fabler.jetflix.ui
 
+import androidx.compose.material.BottomSheetScaffoldState
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import com.fabler.jetflix.ui.MainDestinations.MOVIE_ID_KEY
 import com.fabler.jetflix.ui.dashboard.DashboardSections
 import com.fabler.jetflix.ui.dashboard.addDashboardGraph
+import kotlinx.coroutines.CoroutineScope
 
 /**
  * Destinations used in the ([JetFlixApp]).
@@ -24,11 +23,14 @@ object MainDestinations {
   const val MOVIE_ID_KEY = "movieId"
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun JetFlixNavGraph(
   modifier: Modifier = Modifier,
   navController: NavHostController = rememberNavController(),
   startDestination: String = MainDestinations.DASHBOARD_ROUTE,
+  bottomSheetScaffoldState: BottomSheetScaffoldState,
+  coroutineScope: CoroutineScope
 ) {
   NavHost(
     navController = navController,
@@ -39,13 +41,9 @@ fun JetFlixNavGraph(
       startDestination = DashboardSections.HOME.route
     ) {
       addDashboardGraph(
-        onMovieSelected = { movieId: Long, from: NavBackStackEntry ->
-          // In order to discard duplicated navigation events, we check the Lifecycle
-          if (from.lifecycleIsResumed()) {
-            navController.navigate("${MainDestinations.MOVIE_DETAIL_ROUTE}/$movieId")
-          }
-        },
-        modifier = modifier
+        modifier = modifier,
+        bottomSheetScaffoldState = bottomSheetScaffoldState,
+        coroutineScope = coroutineScope
       )
     }
 //    composable(
@@ -69,5 +67,5 @@ fun JetFlixNavGraph(
  *
  * This is used to de-duplicate navigation events.
  */
-private fun NavBackStackEntry.lifecycleIsResumed() =
+fun NavBackStackEntry.lifecycleIsResumed() =
   this.lifecycle.currentState == Lifecycle.State.RESUMED

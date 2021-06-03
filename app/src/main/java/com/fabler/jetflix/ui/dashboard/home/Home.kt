@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.BottomSheetScaffoldState
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -29,13 +31,18 @@ import com.fabler.jetflix.ui.components.HighlightMovieItem
 import com.fabler.jetflix.ui.components.JetFlixSurface
 import com.fabler.jetflix.ui.theme.JetFlixTheme
 import com.fabler.jetflix.ui.viewmodel.ViewModelProvider
-import com.fabler.jetflix.util.Resource
+import com.fabler.jetflix.util.Resource.Success
+import kotlinx.coroutines.CoroutineScope
 
+@ExperimentalMaterialApi
 @Composable
 fun Home(
-  onMovieClick: (Long) -> Unit,
-  modifier: Modifier = Modifier
+  bottomSheetScaffoldState: BottomSheetScaffoldState,
+  modifier: Modifier = Modifier,
+  coroutineScope: CoroutineScope
 ) {
+  //val coroutineScope = rememberCoroutineScope()
+  val selectedMovieViewModel = ViewModelProvider.selectedMovieViewModel
   JetFlixSurface(
     color = JetFlixTheme.colors.appBackground,
   ) {
@@ -45,9 +52,15 @@ fun Home(
         .verticalScroll(rememberScrollState())
     ) {
       when (val topHighlightedMovie = ViewModelProvider.movieByIdViewModel.movie) {
-        is Resource.Success -> {
+        is Success -> {
           TopHighlightedMovie(
-            onMovieClick = onMovieClick,
+            onMovieClick = {
+              selectedMovieViewModel.setSelectedMovie(topHighlightedMovie.data)
+              onBottomSheetTapped(
+                coroutineScope = coroutineScope,
+                bottomSheetScaffoldState = bottomSheetScaffoldState
+              )
+            },
             modifier = modifier,
             topMovie = topHighlightedMovie.data
           )
@@ -55,9 +68,15 @@ fun Home(
       }
       Spacer(modifier = Modifier.height(10.dp))
       when (val jetFlixOriginals = ViewModelProvider.topRatedMoviesViewModel.topRatedMovies) {
-        is Resource.Success -> {
+        is Success -> {
           JetFlixOriginals(
-            onMovieClick = onMovieClick,
+            onMovieClick = { movieId ->
+              selectedMovieViewModel.setSelectedMovie(jetFlixOriginals.data.find { it.id == movieId })
+              onBottomSheetTapped(
+                coroutineScope = coroutineScope,
+                bottomSheetScaffoldState = bottomSheetScaffoldState
+              )
+            },
             modifier = modifier,
             jetFlixOriginalMovies = jetFlixOriginals.data
           )
@@ -65,9 +84,15 @@ fun Home(
       }
       Spacer(modifier = Modifier.height(20.dp))
       when (val popularOnJetFlix = ViewModelProvider.nowPlayingMoviesViewModel.nowPlayingMovies) {
-        is Resource.Success -> {
+        is Success -> {
           PopularOnJetFlix(
-            onMovieClick = onMovieClick,
+            onMovieClick = { movieId ->
+              selectedMovieViewModel.setSelectedMovie(popularOnJetFlix.data.find { it.id == movieId })
+              onBottomSheetTapped(
+                coroutineScope = coroutineScope,
+                bottomSheetScaffoldState = bottomSheetScaffoldState
+              )
+            },
             modifier = modifier,
             popularOnJetFlixMovies = popularOnJetFlix.data
           )
