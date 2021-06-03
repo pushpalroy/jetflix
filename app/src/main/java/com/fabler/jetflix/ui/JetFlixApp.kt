@@ -1,15 +1,28 @@
 package com.fabler.jetflix.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.BottomSheetState
 import androidx.compose.material.BottomSheetValue.Collapsed
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ExtendedFloatingActionButton
+import androidx.compose.material.FabPosition
+import androidx.compose.material.FloatingActionButtonDefaults
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons.Filled
+import androidx.compose.material.icons.filled.Shuffle
 import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.fabler.jetflix.ui.components.JetFlixScaffold
@@ -21,12 +34,20 @@ import com.fabler.jetflix.ui.viewmodel.ProvideMultiViewModel
 import com.google.accompanist.insets.ProvideWindowInsets
 import kotlinx.coroutines.launch
 
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
 fun JetFlixApp() {
   ProvideWindowInsets {
     JetFlixTheme {
       ProvideMultiViewModel {
+        val listState = rememberLazyListState()
+        val isScrolledDownwards = remember {
+          derivedStateOf {
+            listState.firstVisibleItemScrollOffset > 0
+          }
+        }
+
         val bottomSheetCoroutineScope = rememberCoroutineScope()
         val tabs = remember { DashboardSections.values() }
         val navController = rememberNavController()
@@ -51,17 +72,59 @@ fun JetFlixApp() {
           sheetPeekHeight = 0.dp
         ) {
           JetFlixScaffold(
-            bottomBar = { JetFlixBottomBar(navController = navController, tabs = tabs) }
+            bottomBar = { JetFlixBottomBar(navController = navController, tabs = tabs) },
+            floatingActionButton = { PlaySomethingFAB(isScrolledDownwards.value.not()) },
+            floatingActionButtonPosition = FabPosition.End
           ) { innerPaddingModifier ->
             JetFlixNavGraph(
               navController = navController,
               modifier = Modifier.padding(innerPaddingModifier),
               bottomSheetScaffoldState = bottomSheetScaffoldState,
-              coroutineScope = bottomSheetCoroutineScope
+              coroutineScope = bottomSheetCoroutineScope,
+              listState = listState
             )
           }
         }
       }
     }
+  }
+}
+
+@ExperimentalAnimationApi
+@Composable
+fun PlaySomethingFAB(
+  isExtended: Boolean
+) {
+  ExtendedFloatingActionButton(
+    icon = {
+      Icon(
+        imageVector = Filled.Shuffle,
+        contentDescription = "Shuffle",
+        tint = JetFlixTheme.colors.iconTint
+      )
+    },
+    text = {
+      AnimatedVisibility(visible = isExtended) {
+        Text(
+          text = "Play Something",
+          color = JetFlixTheme.colors.uiLightBackground,
+          fontWeight = FontWeight.ExtraBold
+        )
+      }
+    },
+    backgroundColor = JetFlixTheme.colors.progressIndicatorBg,
+    onClick = { },
+    elevation = FloatingActionButtonDefaults.elevation(8.dp)
+  )
+}
+
+@ExperimentalAnimationApi
+@Preview("Play Something FAB Preview")
+@Composable
+fun PlaySomethingFloatingActionButtonPreview() {
+  JetFlixTheme(
+    darkTheme = true
+  ) {
+    PlaySomethingFAB(true)
   }
 }

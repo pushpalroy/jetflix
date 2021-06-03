@@ -1,5 +1,6 @@
 package com.fabler.jetflix.ui
 
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.BottomSheetScaffoldState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
@@ -30,7 +31,9 @@ fun JetFlixNavGraph(
   navController: NavHostController = rememberNavController(),
   startDestination: String = MainDestinations.DASHBOARD_ROUTE,
   bottomSheetScaffoldState: BottomSheetScaffoldState,
-  coroutineScope: CoroutineScope
+  coroutineScope: CoroutineScope,
+  listState: LazyListState
+
 ) {
   NavHost(
     navController = navController,
@@ -43,7 +46,8 @@ fun JetFlixNavGraph(
       addDashboardGraph(
         modifier = modifier,
         bottomSheetScaffoldState = bottomSheetScaffoldState,
-        coroutineScope = coroutineScope
+        coroutineScope = coroutineScope,
+        listState = listState
       )
     }
 //    composable(

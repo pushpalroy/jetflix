@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.BottomSheetScaffoldState
 import androidx.compose.material.ExperimentalMaterialApi
@@ -50,10 +51,11 @@ import kotlinx.coroutines.CoroutineScope
 fun NavGraphBuilder.addDashboardGraph(
   bottomSheetScaffoldState: BottomSheetScaffoldState,
   modifier: Modifier = Modifier,
-  coroutineScope: CoroutineScope
+  coroutineScope: CoroutineScope,
+  listState: LazyListState
 ) {
   composable(DashboardSections.HOME.route) {
-    Home(bottomSheetScaffoldState, modifier, coroutineScope)
+    Home(bottomSheetScaffoldState, modifier, coroutineScope, listState)
   }
 }
 
@@ -92,7 +94,7 @@ fun JetFlixBottomBar(
       Row(
         modifier = Modifier
           .fillMaxWidth()
-          .padding(bottom = 50.dp)
+          .padding(bottom = 65.dp)
       ) {
         tabs.forEach { section ->
           val selected = section == currentSection
