@@ -3,9 +3,9 @@ package com.fabler.jetflix.domain.repo
 import com.fabler.jetflix.BuildConfig
 import com.fabler.jetflix.data.network.service.MoviesService
 import com.fabler.jetflix.domain.model.Movie
-import com.fabler.jetflix.util.Either
-import com.fabler.jetflix.util.Failure
-import com.fabler.jetflix.util.Failure.UnexpectedFailure
+import com.fabler.jetflix.util.Single
+import com.fabler.jetflix.util.Error
+import com.fabler.jetflix.util.Error.UnexpectedError
 import com.fabler.jetflix.util.error
 import com.fabler.jetflix.util.success
 import timber.log.Timber
@@ -21,7 +21,7 @@ class MoviesRepositoryImpl(
   override suspend fun getTopRatedMovies(
     language: String,
     page: Int
-  ): Either<Failure, List<Movie>> {
+  ): Single<Error, List<Movie>> {
     return try {
       val result = service.getTopRatedMovies(
         language = language,
@@ -31,14 +31,14 @@ class MoviesRepositoryImpl(
       success(result)
     } catch (e: Exception) {
       Timber.tag(TAG).e("Exception: ${e.message}")
-      error(UnexpectedFailure)
+      error(UnexpectedError)
     }
   }
 
   override suspend fun getNowPlayingMovies(
     language: String,
     page: Int
-  ): Either<Failure, List<Movie>> {
+  ): Single<Error, List<Movie>> {
     return try {
       val result = service.getNowPlayingMovies(
         language = language,
@@ -48,13 +48,13 @@ class MoviesRepositoryImpl(
       success(result)
     } catch (e: Exception) {
       Timber.tag(TAG).e("Exception: ${e.message}")
-      error(UnexpectedFailure)
+      error(UnexpectedError)
     }
   }
 
   override suspend fun getMovieById(
     movieId: Long
-  ): Either<Failure, Movie> {
+  ): Single<Error, Movie> {
     return try {
       val result = service.getMovieById(
         movieId = movieId,
@@ -63,7 +63,7 @@ class MoviesRepositoryImpl(
       success(result)
     } catch (e: Exception) {
       Timber.tag(TAG).e("Exception: ${e.message}")
-      error(UnexpectedFailure)
+      error(UnexpectedError)
     }
   }
 }

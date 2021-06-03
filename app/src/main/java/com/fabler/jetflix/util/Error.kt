@@ -5,9 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.fabler.jetflix.R
 
-sealed class Failure(@StringRes val key: Int) {
+sealed class Error(@StringRes val key: Int) {
 
-  object UnexpectedFailure : Failure(R.string.unexpected_error)
+  object UnexpectedError : Error(R.string.unexpected_error)
 
   @Composable
   fun translate(): String {

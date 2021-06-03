@@ -1,22 +1,22 @@
 package com.fabler.jetflix.domain.repo
 
 import com.fabler.jetflix.domain.model.Movie
-import com.fabler.jetflix.util.Either
-import com.fabler.jetflix.util.Failure
+import com.fabler.jetflix.util.Single
+import com.fabler.jetflix.util.Error
 
 interface MoviesRepository {
 
   suspend fun getTopRatedMovies(
     language: String,
     page: Int
-  ): Either<Failure, List<Movie>>
+  ): Single<Error, List<Movie>>
 
   suspend fun getNowPlayingMovies(
     language: String,
     page: Int
-  ): Either<Failure, List<Movie>>
+  ): Single<Error, List<Movie>>
 
   suspend fun getMovieById(
     movieId: Long
-  ): Either<Failure, Movie>
+  ): Single<Error, Movie>
 }

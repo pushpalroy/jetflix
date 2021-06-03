@@ -41,18 +41,18 @@ class TopRatedMoviesViewModel @Inject constructor(
     }
   }
 
-  fun fetchTopRatedMovies() {
+  private fun fetchTopRatedMovies() {
     viewModelScope.launch {
       topRatedMovies = Resource.Loading
-      val result = repository.getTopRatedMovies(language = MoviesApi.LANG_ENG, page = (0..5).random())
-      result.fold(
-        { failure ->
-          topRatedMovies = Resource.Error(failure)
-        },
-        { data ->
-          topRatedMovies = Resource.Success(data)
-        }
-      )
+      repository.getTopRatedMovies(language = MoviesApi.LANG_ENG, page = (0..5).random())
+        .subscribe(
+          { error ->
+            topRatedMovies = Resource.Error(error)
+          },
+          { data ->
+            topRatedMovies = Resource.Success(data)
+          }
+        )
     }
   }
 }

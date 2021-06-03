@@ -41,18 +41,18 @@ class NowPlayingMoviesViewModel @Inject constructor(
     }
   }
 
-  fun fetchNowPlayingMovies() {
+  private fun fetchNowPlayingMovies() {
     viewModelScope.launch {
       nowPlayingMovies = Resource.Loading
-      val result = repository.getNowPlayingMovies(language = MoviesApi.LANG_ENG, page = (0..5).random())
-      result.fold(
-        { failure ->
-          nowPlayingMovies = Resource.Error(failure)
-        },
-        { data ->
-          nowPlayingMovies = Resource.Success(data)
-        }
-      )
+      repository.getNowPlayingMovies(language = MoviesApi.LANG_ENG, page = (0..5).random())
+        .subscribe(
+          { error ->
+            nowPlayingMovies = Resource.Error(error)
+          },
+          { data ->
+            nowPlayingMovies = Resource.Success(data)
+          }
+        )
     }
   }
 }
