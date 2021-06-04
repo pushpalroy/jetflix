@@ -16,6 +16,11 @@ interface MoviesRepository {
     page: Int
   ): Single<Error, List<Movie>>
 
+  suspend fun getPopularMovies(
+    language: String,
+    page: Int
+  ): Single<Error, List<Movie>>
+
   suspend fun getMovieById(
     movieId: Long
   ): Single<Error, Movie>

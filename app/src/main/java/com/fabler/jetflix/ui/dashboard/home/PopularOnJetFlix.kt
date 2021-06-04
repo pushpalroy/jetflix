@@ -36,12 +36,12 @@ fun PopularOnJetFlix(
       modifier = Modifier.padding(start = 8.dp)
     )
     Spacer(modifier = Modifier.height(12.dp))
-    PopularOnJetFlixMoviesCarousel(movies = popularOnJetFlixMovies, onMovieSelected = onMovieClick)
+    TrendingNowMoviesCarousel(movies = popularOnJetFlixMovies, onMovieSelected = onMovieClick)
   }
 }
 
 @Composable
-private fun PopularOnJetFlixMoviesCarousel(
+private fun TrendingNowMoviesCarousel(
   movies: List<Movie>,
   onMovieSelected: (Long) -> Unit
 ) {

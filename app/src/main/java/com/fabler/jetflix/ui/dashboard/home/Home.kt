@@ -84,7 +84,7 @@ fun Home(
           }
         }
         Spacer(modifier = Modifier.height(20.dp))
-        when (val popularOnJetFlix = ViewModelProvider.nowPlayingMoviesViewModel.nowPlayingMovies) {
+        when (val popularOnJetFlix = ViewModelProvider.popularMoviesViewModel.popularMovies) {
           is Success -> {
             PopularOnJetFlix(
               onMovieClick = { movieId ->
@@ -99,8 +99,23 @@ fun Home(
             )
           }
         }
+        Spacer(modifier = Modifier.height(20.dp))
+        when (val trendingNow = ViewModelProvider.nowPlayingMoviesViewModel.nowPlayingMovies) {
+          is Success -> {
+            TrendingNow(
+              onMovieClick = { movieId ->
+                selectedMovieViewModel.setSelectedMovie(trendingNow.data.find { it.id == movieId })
+                onBottomSheetTapped(
+                  coroutineScope = coroutineScope,
+                  bottomSheetScaffoldState = bottomSheetScaffoldState
+                )
+              },
+              modifier = modifier,
+              trendingNowMovies = trendingNow.data
+            )
+          }
+        }
       }
-
     }
   }
 }

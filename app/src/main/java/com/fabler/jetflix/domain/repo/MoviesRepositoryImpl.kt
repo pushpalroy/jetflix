@@ -18,6 +18,7 @@ class MoviesRepositoryImpl(
     private const val TAG = "MoviesRepo"
   }
 
+  // Use for JetFlix Originals
   override suspend fun getTopRatedMovies(
     language: String,
     page: Int
@@ -35,12 +36,31 @@ class MoviesRepositoryImpl(
     }
   }
 
+  // Use for Trending Now
   override suspend fun getNowPlayingMovies(
     language: String,
     page: Int
   ): Single<Error, List<Movie>> {
     return try {
       val result = service.getNowPlayingMovies(
+        language = language,
+        page = page,
+        apiKey = BuildConfig.API_KEY
+      ).results.map { it.asDomainModel() }
+      success(result)
+    } catch (e: Exception) {
+      Timber.tag(TAG).e("Exception: ${e.message}")
+      error(UnexpectedError)
+    }
+  }
+
+  // Use for Popular On JetFlix
+  override suspend fun getPopularMovies(
+    language: String,
+    page: Int
+  ): Single<Error, List<Movie>> {
+    return try {
+      val result = service.getPopularMovies(
         language = language,
         page = page,
         apiKey = BuildConfig.API_KEY

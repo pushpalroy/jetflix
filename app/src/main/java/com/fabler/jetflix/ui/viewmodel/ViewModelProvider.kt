@@ -14,6 +14,10 @@ object ViewModelProvider {
     @Composable
     get() = LocalNowPlayingMoviesViewModel.current
 
+  val popularMoviesViewModel: PopularMoviesViewModel
+    @Composable
+    get() = LocalPopularMoviesViewModel.current
+
   val movieByIdViewModel: MovieByIdViewModel
     @Composable
     get() = LocalMovieByIdViewModel.current
@@ -27,6 +31,7 @@ object ViewModelProvider {
 fun ProvideMultiViewModel(content: @Composable () -> Unit) {
   val topRatedMoviesViewModel: TopRatedMoviesViewModel = viewModel()
   val nowPlayingMoviesViewModel: NowPlayingMoviesViewModel = viewModel()
+  val popularMoviesViewModel: PopularMoviesViewModel = viewModel()
   val movieByIdViewModel: MovieByIdViewModel = viewModel()
   val selectedMovieViewModel: SelectedMovieViewModel = viewModel()
 
@@ -37,12 +42,16 @@ fun ProvideMultiViewModel(content: @Composable () -> Unit) {
       LocalNowPlayingMoviesViewModel provides nowPlayingMoviesViewModel,
     ) {
       CompositionLocalProvider(
-        LocalMovieByIdViewModel provides movieByIdViewModel
+        LocalPopularMoviesViewModel provides popularMoviesViewModel
       ) {
         CompositionLocalProvider(
-          LocalSelectedMovieViewModel provides selectedMovieViewModel
+          LocalMovieByIdViewModel provides movieByIdViewModel
         ) {
-          content()
+          CompositionLocalProvider(
+            LocalSelectedMovieViewModel provides selectedMovieViewModel
+          ) {
+            content()
+          }
         }
       }
     }
@@ -55,6 +64,10 @@ private val LocalTopRatedMoviesViewModel = staticCompositionLocalOf<TopRatedMovi
 
 private val LocalNowPlayingMoviesViewModel = staticCompositionLocalOf<NowPlayingMoviesViewModel> {
   error("No NowPlayingMoviesViewModel provided")
+}
+
+private val LocalPopularMoviesViewModel = staticCompositionLocalOf<PopularMoviesViewModel> {
+  error("No PopularMoviesViewModel provided")
 }
 
 private val LocalMovieByIdViewModel = staticCompositionLocalOf<MovieByIdViewModel> {
