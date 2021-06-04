@@ -2,14 +2,17 @@ package com.fabler.jetflix.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.BottomSheetState
 import androidx.compose.material.BottomSheetValue.Collapsed
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ExtendedFloatingActionButton
-import androidx.compose.material.FabPosition
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.FloatingActionButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -20,11 +23,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import com.fabler.jetflix.ui.anim.getFabTextTextPaddingState
 import com.fabler.jetflix.ui.components.JetFlixScaffold
 import com.fabler.jetflix.ui.components.JetFlixTopAppBar
 import com.fabler.jetflix.ui.dashboard.DashboardSections
@@ -42,19 +47,19 @@ fun JetFlixApp() {
   ProvideWindowInsets {
     JetFlixTheme {
       ProvideMultiViewModel {
+
+        val navController = rememberNavController()
+        val tabs = remember { DashboardSections.values() }
+        val bottomSheetCoroutineScope = rememberCoroutineScope()
+        val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
+          bottomSheetState = BottomSheetState(Collapsed)
+        )
         val listState = rememberLazyListState()
         val isScrolledDown = remember {
           derivedStateOf {
             listState.firstVisibleItemScrollOffset > 0
           }
         }
-
-        val bottomSheetCoroutineScope = rememberCoroutineScope()
-        val tabs = remember { DashboardSections.values() }
-        val navController = rememberNavController()
-        val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
-          bottomSheetState = BottomSheetState(Collapsed)
-        )
 
         BottomSheetScaffold(
           scaffoldState = bottomSheetScaffoldState,
@@ -74,10 +79,7 @@ fun JetFlixApp() {
         ) {
           JetFlixScaffold(
             bottomBar = { JetFlixBottomBar(navController = navController, tabs = tabs) },
-            floatingActionButton = {
-              PlaySomethingFAB(isScrolledUp = isScrolledDown.value.not())
-            },
-            floatingActionButtonPosition = FabPosition.End
+            fab = { PlaySomethingFAB(isScrolledUp = isScrolledDown.value.not()) }
           ) { innerPaddingModifier ->
 
             JetFlixNavGraph(
@@ -102,27 +104,36 @@ fun JetFlixApp() {
 fun PlaySomethingFAB(
   isScrolledUp: Boolean
 ) {
-  ExtendedFloatingActionButton(
-    icon = {
-      Icon(
-        imageVector = Filled.Shuffle,
-        contentDescription = "Shuffle",
-        tint = JetFlixTheme.colors.iconTint
-      )
-    },
-    text = {
-      AnimatedVisibility(visible = isScrolledUp) {
-        Text(
-          text = "Play Something",
-          color = JetFlixTheme.colors.uiLightBackground,
-          fontWeight = FontWeight.ExtraBold
-        )
-      }
-    },
+  FloatingActionButton(
+    onClick = {},
     backgroundColor = JetFlixTheme.colors.progressIndicatorBg,
-    onClick = { },
     elevation = FloatingActionButtonDefaults.elevation(8.dp)
-  )
+  ) {
+    val fabTextPadding = getFabTextTextPaddingState(isScrolledDown = isScrolledUp.not()).value
+    Box(
+      modifier = Modifier.padding(
+        start = fabTextPadding,
+        end = fabTextPadding,
+      ),
+      contentAlignment = Alignment.Center
+    ) {
+      Row(verticalAlignment = Alignment.CenterVertically) {
+        Icon(
+          imageVector = Filled.Shuffle,
+          contentDescription = "Shuffle",
+          tint = JetFlixTheme.colors.iconTint
+        )
+        Spacer(Modifier.width(fabTextPadding))
+        AnimatedVisibility(visible = isScrolledUp) {
+          Text(
+            text = "Play Something",
+            color = JetFlixTheme.colors.uiLightBackground,
+            fontWeight = FontWeight.ExtraBold
+          )
+        }
+      }
+    }
+  }
 }
 
 @ExperimentalAnimationApi
