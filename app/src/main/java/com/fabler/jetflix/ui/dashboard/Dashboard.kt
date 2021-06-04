@@ -45,6 +45,7 @@ import com.fabler.jetflix.ui.anim.getIconTint
 import com.fabler.jetflix.ui.components.JetFlixSurface
 import com.fabler.jetflix.ui.dashboard.home.Home
 import com.fabler.jetflix.ui.theme.JetFlixTheme
+import com.google.accompanist.insets.navigationBarsPadding
 import kotlinx.coroutines.CoroutineScope
 
 @ExperimentalMaterialApi

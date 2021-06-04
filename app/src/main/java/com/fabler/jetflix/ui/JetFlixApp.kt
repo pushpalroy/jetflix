@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.fabler.jetflix.ui.components.JetFlixScaffold
+import com.fabler.jetflix.ui.components.JetFlixTopAppBar
 import com.fabler.jetflix.ui.dashboard.DashboardSections
 import com.fabler.jetflix.ui.dashboard.JetFlixBottomBar
 import com.fabler.jetflix.ui.dashboard.home.BottomSheetContent
@@ -42,7 +43,7 @@ fun JetFlixApp() {
     JetFlixTheme {
       ProvideMultiViewModel {
         val listState = rememberLazyListState()
-        val isScrolledDownwards = remember {
+        val isScrolledDown = remember {
           derivedStateOf {
             listState.firstVisibleItemScrollOffset > 0
           }
@@ -73,15 +74,21 @@ fun JetFlixApp() {
         ) {
           JetFlixScaffold(
             bottomBar = { JetFlixBottomBar(navController = navController, tabs = tabs) },
-            floatingActionButton = { PlaySomethingFAB(isScrolledDownwards.value.not()) },
+            floatingActionButton = {
+              PlaySomethingFAB(isScrolledUp = isScrolledDown.value.not())
+            },
             floatingActionButtonPosition = FabPosition.End
           ) { innerPaddingModifier ->
+
             JetFlixNavGraph(
               navController = navController,
               modifier = Modifier.padding(innerPaddingModifier),
               bottomSheetScaffoldState = bottomSheetScaffoldState,
               coroutineScope = bottomSheetCoroutineScope,
               listState = listState
+            )
+            JetFlixTopAppBar(
+              isScrolledDown = isScrolledDown.value
             )
           }
         }
@@ -93,7 +100,7 @@ fun JetFlixApp() {
 @ExperimentalAnimationApi
 @Composable
 fun PlaySomethingFAB(
-  isExtended: Boolean
+  isScrolledUp: Boolean
 ) {
   ExtendedFloatingActionButton(
     icon = {
@@ -104,7 +111,7 @@ fun PlaySomethingFAB(
       )
     },
     text = {
-      AnimatedVisibility(visible = isExtended) {
+      AnimatedVisibility(visible = isScrolledUp) {
         Text(
           text = "Play Something",
           color = JetFlixTheme.colors.uiLightBackground,
