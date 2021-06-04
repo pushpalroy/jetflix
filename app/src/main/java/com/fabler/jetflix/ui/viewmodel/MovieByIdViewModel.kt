@@ -22,7 +22,7 @@ class MovieByIdViewModel @Inject constructor(
     private set
 
   init {
-    fetchMovieById(movieId = 587807)
+    fetchMovieById(movieId = 520763)
   }
 
   private fun fetchMovieById(movieId: Long) {

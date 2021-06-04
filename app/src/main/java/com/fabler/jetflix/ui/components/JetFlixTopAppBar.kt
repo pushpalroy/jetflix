@@ -1,42 +1,106 @@
 package com.fabler.jetflix.ui.components
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons.Outlined
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fabler.jetflix.R.drawable
 import com.fabler.jetflix.ui.anim.getTopBarColorState
 import com.fabler.jetflix.ui.anim.getTopBarWidthState
 import com.fabler.jetflix.ui.theme.AlphaNearOpaque
 import com.fabler.jetflix.ui.theme.JetFlixTheme
-import com.google.accompanist.insets.statusBarsPadding
 
+private val TopBarHeight = 80.dp
+
+@ExperimentalAnimationApi
 @Composable
 fun JetFlixTopAppBar(
   isScrolledDown: Boolean,
   modifier: Modifier = Modifier,
 ) {
   JetFlixSurface(
-    modifier = modifier.padding(top = getTopBarWidthState(isScrolledDown = isScrolledDown).value),
+    modifier = modifier
+      .padding(top = getTopBarWidthState(isScrolledDown = isScrolledDown).value)
+      .height(TopBarHeight),
     color = getTopBarColorState(isScrolledDown = isScrolledDown).value
   ) {
     TopAppBar(
       elevation = 0.dp,
       backgroundColor = Color.Transparent,
       contentColor = JetFlixTheme.colors.uiBackground.copy(alpha = AlphaNearOpaque),
-      modifier = modifier.statusBarsPadding()
+      modifier = modifier
+        .height(TopBarHeight)
     ) {
       Column {
+        AnimatedVisibility(visible = isScrolledDown.not()) {
+          Row(
+            modifier = Modifier.padding(start = 10.dp)
+          ) {
+            Box(
+              modifier = Modifier
+                .weight(6f)
+                .align(Alignment.CenterVertically)
+                .clickable { }
+            ) {
+              Image(
+                painterResource(id = drawable.jetflix_logo),
+                contentDescription = "Jetflix logo",
+                modifier = Modifier
+                  .size(30.dp)
+              )
+            }
+            Box(
+              modifier = Modifier
+                .weight(1f)
+                .align(Alignment.CenterVertically)
+                .clickable { }
+            ) {
+              Icon(
+                imageVector = Outlined.Search,
+                contentDescription = "Search",
+                tint = JetFlixTheme.colors.iconInteractive
+              )
+            }
+            Box(
+              modifier = Modifier
+                .weight(1f)
+                .align(Alignment.CenterVertically)
+                .clickable { }
+            ) {
+              Image(
+                painterResource(id = drawable.profile),
+                contentDescription = "User profile",
+                modifier = Modifier
+                  .size(25.dp)
+              )
+            }
+          }
+        }
+        Spacer(modifier = Modifier.height(20.dp))
         Row {
           TopAppBarMenuItem(
             text = "TV Shows",
@@ -72,9 +136,12 @@ private fun TopAppBarMenuItem(
       fontSize = 16.sp
     ),
     modifier = modifier
+      .padding(5.dp)
+      .clickable { }
   )
 }
 
+@ExperimentalAnimationApi
 @Preview
 @Composable
 fun ToolBarPreview() {
