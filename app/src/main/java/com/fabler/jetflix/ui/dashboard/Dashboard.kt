@@ -1,7 +1,6 @@
 package com.fabler.jetflix.ui.dashboard
 
 import androidx.annotation.StringRes
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
@@ -10,10 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.material.BottomSheetScaffoldState
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -37,16 +33,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.fabler.jetflix.R
 import com.fabler.jetflix.ui.anim.getIconTint
 import com.fabler.jetflix.ui.components.JetFlixSurface
-import com.fabler.jetflix.ui.dashboard.home.Home
 import com.fabler.jetflix.ui.theme.JetFlixTheme
-import kotlinx.coroutines.CoroutineScope
 
 enum class DashboardSections(
   @StringRes val title: Int,
@@ -57,19 +49,6 @@ enum class DashboardSections(
   PLAY_SOMETHING(R.string.dashboard_play, Icons.Default.Shuffle, "dashboard/play"),
   COMING_SOON(R.string.dashboard_coming_soon, Icons.Outlined.PlayCircle, "dashboard/coming_soon"),
   DOWNLOADS(R.string.dashboard_downloads, Icons.Default.Downloading, "dashboard/downloads")
-}
-
-@ExperimentalAnimationApi
-@ExperimentalMaterialApi
-fun NavGraphBuilder.addDashboardGraph(
-  bottomSheetScaffoldState: BottomSheetScaffoldState,
-  modifier: Modifier = Modifier,
-  coroutineScope: CoroutineScope,
-  listState: LazyListState
-) {
-  composable(DashboardSections.HOME.route) {
-    Home(bottomSheetScaffoldState, modifier, coroutineScope, listState)
-  }
 }
 
 @Composable

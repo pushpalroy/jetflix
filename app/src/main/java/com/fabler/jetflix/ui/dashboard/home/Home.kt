@@ -17,6 +17,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -47,14 +48,14 @@ fun Home(
   bottomSheetScaffoldState: BottomSheetScaffoldState,
   modifier: Modifier = Modifier,
   coroutineScope: CoroutineScope,
-  listState: LazyListState
+  scrollState: LazyListState
 ) {
   val selectedMovieViewModel = ViewModelProvider.selectedMovieViewModel
   JetFlixSurface(
     color = JetFlixTheme.colors.appBackground,
   ) {
     LazyColumn(
-      state = listState,
+      state = scrollState,
       modifier = modifier
         .padding(bottom = 120.dp)
     ) {

@@ -71,7 +71,7 @@ fun BottomSheetContent(
 }
 
 @Composable
-fun BottomSheetLayout(
+private fun BottomSheetLayout(
   selectedMovie: Movie,
   onMovieClick: (Long) -> Unit,
   onBottomSheetClosePressed: () -> Unit

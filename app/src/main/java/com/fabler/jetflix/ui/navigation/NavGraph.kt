@@ -17,7 +17,7 @@ import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.fabler.jetflix.ui.dashboard.DashboardSections
-import com.fabler.jetflix.ui.dashboard.addDashboardGraph
+import com.fabler.jetflix.ui.dashboard.home.Home
 import com.fabler.jetflix.ui.moviedetail.MovieDetail
 import com.fabler.jetflix.ui.navigation.MainDestinations.MOVIE_ID_KEY
 import kotlinx.coroutines.CoroutineScope
@@ -34,14 +34,14 @@ object MainDestinations {
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
-fun JetFlixNavGraph(
+fun NavGraph(
   modifier: Modifier = Modifier,
   navController: NavHostController = rememberNavController(),
   startDestination: String = MainDestinations.DASHBOARD_ROUTE,
   bottomSheetScaffoldState: BottomSheetScaffoldState,
-  coroutineScope: CoroutineScope,
-  listState: LazyListState,
-  actions: MainActions
+  bottomSheetCoroutineScope: CoroutineScope,
+  homeScreenScrollState: LazyListState,
+  mainNavActions: MainActions
 ) {
   NavHost(
     navController = navController,
@@ -51,12 +51,14 @@ fun JetFlixNavGraph(
       route = MainDestinations.DASHBOARD_ROUTE,
       startDestination = DashboardSections.HOME.route
     ) {
-      addDashboardGraph(
-        modifier = modifier,
-        bottomSheetScaffoldState = bottomSheetScaffoldState,
-        coroutineScope = coroutineScope,
-        listState = listState
-      )
+      composable(DashboardSections.HOME.route) {
+        Home(
+          bottomSheetScaffoldState = bottomSheetScaffoldState,
+          modifier = modifier,
+          coroutineScope = bottomSheetCoroutineScope,
+          scrollState = homeScreenScrollState
+        )
+      }
     }
     composable(
       route = "${MainDestinations.MOVIE_DETAIL_ROUTE}/{$MOVIE_ID_KEY}",
@@ -64,7 +66,7 @@ fun JetFlixNavGraph(
     ) { from: NavBackStackEntry ->
 
       BackHandler {
-        actions.upPress(from)
+        mainNavActions.upPress(from)
       }
 
       val arguments = requireNotNull(from.arguments)
@@ -73,7 +75,7 @@ fun JetFlixNavGraph(
       MovieDetail(
         movieId = movieId,
         upPress = {
-          actions.upPress(from)
+          mainNavActions.upPress(from)
         }
       )
     }
@@ -88,13 +90,13 @@ class MainActions(
   updateAppBarVisibility: (Boolean) -> Unit
 ) {
   val openMovieDetails = { movieId: Long ->
-    // In order to discard duplicated navigation events, we check the Lifecycle
-    //if (from.lifecycleIsResumed()) {
     updateAppBarVisibility(false)
     navController.navigate("${MainDestinations.MOVIE_DETAIL_ROUTE}/$movieId") {
+      // Pop up to the start destination of the graph to avoid building up a large
+      // stack of destinations on the back stack as users select items
       popUpTo(navController.graph.startDestinationId)
-      //launchSingleTop = true
-      // }
+      // Avoid multiple copies of the same destination when re-selecting the same item
+      launchSingleTop = true
     }
   }
   val upPress: (rom: NavBackStackEntry) -> Unit = { from: NavBackStackEntry ->

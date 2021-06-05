@@ -12,6 +12,7 @@ import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.BottomSheetScaffoldState
 import androidx.compose.material.BottomSheetState
 import androidx.compose.material.BottomSheetValue.Collapsed
+import androidx.compose.material.BottomSheetValue.Expanded
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.FloatingActionButtonDefaults
@@ -37,9 +38,8 @@ import com.fabler.jetflix.ui.components.JetFlixTopAppBar
 import com.fabler.jetflix.ui.dashboard.DashboardSections
 import com.fabler.jetflix.ui.dashboard.JetFlixBottomBar
 import com.fabler.jetflix.ui.dashboard.home.component.BottomSheetContent
-import com.fabler.jetflix.ui.navigation.JetFlixNavGraph
+import com.fabler.jetflix.ui.navigation.NavGraph
 import com.fabler.jetflix.ui.navigation.MainActions
-import com.fabler.jetflix.ui.navigation.MainDestinations
 import com.fabler.jetflix.ui.theme.JetFlixTheme
 import com.fabler.jetflix.ui.viewmodel.ProvideMultiViewModel
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -61,13 +61,13 @@ fun JetFlixApp() {
         val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
           bottomSheetState = BottomSheetState(Collapsed)
         )
-        val listState = rememberLazyListState()
+        val homeScreenScrollState = rememberLazyListState()
         val isScrolledDown = remember {
           derivedStateOf {
-            listState.firstVisibleItemScrollOffset > 0
+            homeScreenScrollState.firstVisibleItemScrollOffset > 0
           }
         }
-        val navActions = remember(navController) {
+        val mainNavActions = remember(navController) {
           MainActions(navController, updateAppBarVisibility)
         }
 
@@ -77,7 +77,7 @@ fun JetFlixApp() {
             BottomSheetContent(
               onMovieClick = { movieId: Long ->
                 closeBottomSheet(bottomSheetCoroutineScope, bottomSheetScaffoldState)
-                navActions.openMovieDetails(movieId)
+                mainNavActions.openMovieDetails(movieId)
               },
               onBottomSheetClosePressed = {
                 closeBottomSheet(bottomSheetCoroutineScope, bottomSheetScaffoldState)
@@ -95,18 +95,16 @@ fun JetFlixApp() {
             }
           ) { innerPaddingModifier ->
 
-            JetFlixNavGraph(
+            NavGraph(
               navController = navController,
               modifier = Modifier.padding(innerPaddingModifier),
               bottomSheetScaffoldState = bottomSheetScaffoldState,
-              coroutineScope = bottomSheetCoroutineScope,
-              listState = listState,
-              actions = navActions
+              bottomSheetCoroutineScope = bottomSheetCoroutineScope,
+              homeScreenScrollState = homeScreenScrollState,
+              mainNavActions = mainNavActions
             )
             if (shouldShowAppBar) {
-              JetFlixTopAppBar(
-                isScrolledDown = isScrolledDown.value,
-              )
+              JetFlixTopAppBar(isScrolledDown = isScrolledDown.value)
             }
           }
         }

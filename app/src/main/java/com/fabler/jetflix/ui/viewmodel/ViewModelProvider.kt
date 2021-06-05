@@ -43,34 +43,34 @@ object ViewModelProvider {
 
 @Composable
 fun ProvideMultiViewModel(content: @Composable () -> Unit) {
-  val topRatedMoviesViewModel: TopRatedMoviesViewModel = viewModel()
-  val nowPlayingMoviesViewModel: NowPlayingMoviesViewModel = viewModel()
-  val popularMoviesViewModel: PopularMoviesViewModel = viewModel()
-  val movieByIdViewModel: MovieByIdViewModel = viewModel()
-  val selectedMovieViewModel: SelectedMovieViewModel = viewModel()
-  val videoViewModel: VideoViewModel = viewModel()
-  val movieVideoByIdViewModel: MovieVideoByIdViewModel = viewModel()
+  val topRatedMoviesVM: TopRatedMoviesViewModel = viewModel()
+  val nowPlayingMoviesVM: NowPlayingMoviesViewModel = viewModel()
+  val popularMoviesVM: PopularMoviesViewModel = viewModel()
+  val movieByIdVM: MovieByIdViewModel = viewModel()
+  val selectedMovieVM: SelectedMovieViewModel = viewModel()
+  val videoVM: VideoViewModel = viewModel()
+  val movieVideoByIdVM: MovieVideoByIdViewModel = viewModel()
 
   CompositionLocalProvider(
-    LocalTopRatedMoviesViewModel provides topRatedMoviesViewModel,
+    LocalTopRatedMoviesViewModel provides topRatedMoviesVM,
   ) {
     CompositionLocalProvider(
-      LocalNowPlayingMoviesViewModel provides nowPlayingMoviesViewModel,
+      LocalNowPlayingMoviesViewModel provides nowPlayingMoviesVM,
     ) {
       CompositionLocalProvider(
-        LocalPopularMoviesViewModel provides popularMoviesViewModel
+        LocalPopularMoviesViewModel provides popularMoviesVM
       ) {
         CompositionLocalProvider(
-          LocalMovieByIdViewModel provides movieByIdViewModel
+          LocalMovieByIdViewModel provides movieByIdVM
         ) {
           CompositionLocalProvider(
-            LocalSelectedMovieViewModel provides selectedMovieViewModel
+            LocalSelectedMovieViewModel provides selectedMovieVM
           ) {
             CompositionLocalProvider(
-              LocalVideoViewModel provides videoViewModel
+              LocalVideoViewModel provides videoVM
             ) {
               CompositionLocalProvider(
-                LocalMovieVideoByIdViewModel provides movieVideoByIdViewModel,
+                LocalMovieVideoByIdViewModel provides movieVideoByIdVM,
               ) {
                 content()
               }
