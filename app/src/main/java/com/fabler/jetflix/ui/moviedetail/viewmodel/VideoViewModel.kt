@@ -6,6 +6,7 @@ import android.util.SparseArray
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.fabler.jetflix.data.network.constant.MoviesApi.SAMPLE_VIDEO_URL
 import com.fabler.jetflix.ui.moviedetail.viewmodel.lib.VideoMeta
 import com.fabler.jetflix.ui.moviedetail.viewmodel.lib.YouTubeExtractor
 import com.fabler.jetflix.ui.moviedetail.viewmodel.lib.YtFile
@@ -25,8 +26,13 @@ class VideoViewModel @Inject constructor() : ViewModel() {
       override fun onExtractionComplete(ytFiles: SparseArray<YtFile>?, vMeta: VideoMeta?) {
         if (ytFiles != null) {
           val iTag = 22
-          val streamUrl = ytFiles[iTag].url
-          _extractedVideoUrl.value = streamUrl
+          val streamUrl = ytFiles[iTag]?.url
+
+          streamUrl?.let { safeStreamUrl ->
+            _extractedVideoUrl.value = safeStreamUrl
+          }
+        } else {
+          _extractedVideoUrl.value = SAMPLE_VIDEO_URL
         }
       }
     }.extract(youtubeLink, false, false)

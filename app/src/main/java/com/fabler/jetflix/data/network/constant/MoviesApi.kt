@@ -11,4 +11,7 @@ object MoviesApi {
 
   const val LANG_ENG = "en-US"
   const val IMAGE_BASE_URL_W500 = "https://image.tmdb.org/t/p/w500"
+
+  const val SAMPLE_VIDEO_URL =
+    "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
 }

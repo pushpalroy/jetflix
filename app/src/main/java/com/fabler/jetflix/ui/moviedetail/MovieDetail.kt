@@ -22,6 +22,7 @@ fun MovieDetail(
     ViewModelProvider.movieVideoByIdViewModel.fetchMovieVideoById(movieId = movieId)
     val movieVideo: String by ViewModelProvider.movieVideoByIdViewModel.movieVideo
       .observeAsState("")
+
     if (movieVideo.isNotEmpty()) {
       MovieVideo(videoUrl = movieVideo)
     }

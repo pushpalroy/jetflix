@@ -38,6 +38,7 @@ import com.fabler.jetflix.ui.dashboard.DashboardSections
 import com.fabler.jetflix.ui.dashboard.JetFlixBottomBar
 import com.fabler.jetflix.ui.dashboard.home.component.BottomSheetContent
 import com.fabler.jetflix.ui.navigation.JetFlixNavGraph
+import com.fabler.jetflix.ui.navigation.MainActions
 import com.fabler.jetflix.ui.navigation.MainDestinations
 import com.fabler.jetflix.ui.theme.JetFlixTheme
 import com.fabler.jetflix.ui.viewmodel.ProvideMultiViewModel
@@ -66,6 +67,9 @@ fun JetFlixApp() {
             listState.firstVisibleItemScrollOffset > 0
           }
         }
+        val navActions = remember(navController) {
+          MainActions(navController, updateAppBarVisibility)
+        }
 
         BottomSheetScaffold(
           scaffoldState = bottomSheetScaffoldState,
@@ -73,8 +77,7 @@ fun JetFlixApp() {
             BottomSheetContent(
               onMovieClick = { movieId: Long ->
                 closeBottomSheet(bottomSheetCoroutineScope, bottomSheetScaffoldState)
-                updateAppBarVisibility(false)
-                navController.navigate("${MainDestinations.MOVIE_DETAIL_ROUTE}/$movieId")
+                navActions.openMovieDetails(movieId)
               },
               onBottomSheetClosePressed = {
                 closeBottomSheet(bottomSheetCoroutineScope, bottomSheetScaffoldState)
@@ -98,7 +101,7 @@ fun JetFlixApp() {
               bottomSheetScaffoldState = bottomSheetScaffoldState,
               coroutineScope = bottomSheetCoroutineScope,
               listState = listState,
-              updateAppBarVisibility = updateAppBarVisibility
+              actions = navActions
             )
             if (shouldShowAppBar) {
               JetFlixTopAppBar(

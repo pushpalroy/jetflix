@@ -1,5 +1,6 @@
 package com.fabler.jetflix.ui.navigation
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.BottomSheetScaffoldState
@@ -40,8 +41,7 @@ fun JetFlixNavGraph(
   bottomSheetScaffoldState: BottomSheetScaffoldState,
   coroutineScope: CoroutineScope,
   listState: LazyListState,
-  updateAppBarVisibility: (Boolean) -> Unit
-
+  actions: MainActions
 ) {
   NavHost(
     navController = navController,
@@ -61,17 +61,47 @@ fun JetFlixNavGraph(
     composable(
       route = "${MainDestinations.MOVIE_DETAIL_ROUTE}/{$MOVIE_ID_KEY}",
       arguments = listOf(navArgument(MOVIE_ID_KEY) { type = NavType.LongType })
-    ) { backStackEntry ->
-      val arguments = requireNotNull(backStackEntry.arguments)
+    ) { from: NavBackStackEntry ->
+
+      BackHandler {
+        actions.upPress(from)
+      }
+
+      val arguments = requireNotNull(from.arguments)
       val movieId = arguments.getLong(MOVIE_ID_KEY)
 
       MovieDetail(
         movieId = movieId,
         upPress = {
-          updateAppBarVisibility(true)
-          navController.popBackStack()
+          actions.upPress(from)
         }
       )
+    }
+  }
+}
+
+/**
+ * Models the navigation actions in the app.
+ */
+class MainActions(
+  navController: NavHostController,
+  updateAppBarVisibility: (Boolean) -> Unit
+) {
+  val openMovieDetails = { movieId: Long ->
+    // In order to discard duplicated navigation events, we check the Lifecycle
+    //if (from.lifecycleIsResumed()) {
+    updateAppBarVisibility(false)
+    navController.navigate("${MainDestinations.MOVIE_DETAIL_ROUTE}/$movieId") {
+      popUpTo(navController.graph.startDestinationId)
+      //launchSingleTop = true
+      // }
+    }
+  }
+  val upPress: (rom: NavBackStackEntry) -> Unit = { from: NavBackStackEntry ->
+    // In order to discard duplicated navigation events, we check the Lifecycle
+    if (from.lifecycleIsResumed()) {
+      updateAppBarVisibility(true)
+      navController.navigateUp()
     }
   }
 }
@@ -81,5 +111,4 @@ fun JetFlixNavGraph(
  *
  * This is used to de-duplicate navigation events.
  */
-fun NavBackStackEntry.lifecycleIsResumed() =
-  this.lifecycle.currentState == Lifecycle.State.RESUMED
+fun NavBackStackEntry.lifecycleIsResumed() = this.lifecycle.currentState == Lifecycle.State.RESUMED
