@@ -1,4 +1,4 @@
-package com.fabler.jetflix.ui.viewmodel
+package com.fabler.jetflix.ui.dashboard.home.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,43 +14,43 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NowPlayingMoviesViewModel @Inject constructor(
+class TopRatedMoviesViewModel @Inject constructor(
   private val repository: MoviesRepository
 ) : ViewModel() {
 
-  var nowPlayingMovies by mutableStateOf<Resource<List<Movie>>>(Resource.Loading)
+  var topRatedMovies by mutableStateOf<Resource<List<Movie>>>(Resource.Loading)
     private set
 
   init {
-    fetchNowPlayingMovies()
+    fetchTopRatedMovies()
   }
 
   fun getTopRatedMovies(): List<Movie>? {
-    return when (nowPlayingMovies) {
+    return when (topRatedMovies) {
       is Resource.Error -> null
       Resource.Loading -> null
-      is Resource.Success -> (nowPlayingMovies as Resource.Success<List<Movie>>).data
+      is Resource.Success -> (topRatedMovies as Resource.Success<List<Movie>>).data
     }
   }
 
   fun getTopRatedMovieDetails(id: Long): Movie? {
-    return when (nowPlayingMovies) {
+    return when (topRatedMovies) {
       is Resource.Error -> null
       Resource.Loading -> null
-      is Resource.Success -> (nowPlayingMovies as Resource.Success<List<Movie>>).data.find { it.id == id }
+      is Resource.Success -> (topRatedMovies as Resource.Success<List<Movie>>).data.find { it.id == id }
     }
   }
 
-  private fun fetchNowPlayingMovies() {
+  private fun fetchTopRatedMovies() {
     viewModelScope.launch {
-      nowPlayingMovies = Resource.Loading
-      repository.getNowPlayingMovies(language = MoviesApi.LANG_ENG, page = (0..5).random())
+      topRatedMovies = Resource.Loading
+      repository.getTopRatedMovies(language = MoviesApi.LANG_ENG, page = (0..5).random())
         .subscribe(
           { error ->
-            nowPlayingMovies = Resource.Error(error)
+            topRatedMovies = Resource.Error(error)
           },
           { data ->
-            nowPlayingMovies = Resource.Success(data)
+            topRatedMovies = Resource.Success(data)
           }
         )
     }

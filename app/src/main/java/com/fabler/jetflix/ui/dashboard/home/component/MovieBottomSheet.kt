@@ -1,4 +1,4 @@
-package com.fabler.jetflix.ui.dashboard.home
+package com.fabler.jetflix.ui.dashboard.home.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

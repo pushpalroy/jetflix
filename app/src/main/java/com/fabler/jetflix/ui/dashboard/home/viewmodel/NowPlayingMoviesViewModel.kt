@@ -1,4 +1,4 @@
-package com.fabler.jetflix.ui.viewmodel
+package com.fabler.jetflix.ui.dashboard.home.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,43 +14,43 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PopularMoviesViewModel @Inject constructor(
+class NowPlayingMoviesViewModel @Inject constructor(
   private val repository: MoviesRepository
 ) : ViewModel() {
 
-  var popularMovies by mutableStateOf<Resource<List<Movie>>>(Resource.Loading)
+  var nowPlayingMovies by mutableStateOf<Resource<List<Movie>>>(Resource.Loading)
     private set
 
   init {
-    fetchPopularMovies()
+    fetchNowPlayingMovies()
   }
 
-  fun getPopularMovies(): List<Movie>? {
-    return when (popularMovies) {
+  fun getTopRatedMovies(): List<Movie>? {
+    return when (nowPlayingMovies) {
       is Resource.Error -> null
       Resource.Loading -> null
-      is Resource.Success -> (popularMovies as Resource.Success<List<Movie>>).data
+      is Resource.Success -> (nowPlayingMovies as Resource.Success<List<Movie>>).data
     }
   }
 
-  fun getPopularMovieDetails(id: Long): Movie? {
-    return when (popularMovies) {
+  fun getTopRatedMovieDetails(id: Long): Movie? {
+    return when (nowPlayingMovies) {
       is Resource.Error -> null
       Resource.Loading -> null
-      is Resource.Success -> (popularMovies as Resource.Success<List<Movie>>).data.find { it.id == id }
+      is Resource.Success -> (nowPlayingMovies as Resource.Success<List<Movie>>).data.find { it.id == id }
     }
   }
 
-  private fun fetchPopularMovies() {
+  private fun fetchNowPlayingMovies() {
     viewModelScope.launch {
-      popularMovies = Resource.Loading
-      repository.getPopularMovies(language = MoviesApi.LANG_ENG, page = (0..5).random())
+      nowPlayingMovies = Resource.Loading
+      repository.getNowPlayingMovies(language = MoviesApi.LANG_ENG, page = (0..5).random())
         .subscribe(
           { error ->
-            popularMovies = Resource.Error(error)
+            nowPlayingMovies = Resource.Error(error)
           },
           { data ->
-            popularMovies = Resource.Success(data)
+            nowPlayingMovies = Resource.Success(data)
           }
         )
     }

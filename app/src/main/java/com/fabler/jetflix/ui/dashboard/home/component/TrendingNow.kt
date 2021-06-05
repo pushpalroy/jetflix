@@ -1,4 +1,4 @@
-package com.fabler.jetflix.ui.dashboard.home
+package com.fabler.jetflix.ui.dashboard.home.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,14 +19,14 @@ import com.fabler.jetflix.ui.components.SmallMovieItem
 import com.fabler.jetflix.ui.theme.JetFlixTheme
 
 @Composable
-fun PopularOnJetFlix(
+fun TrendingNow(
   onMovieClick: (Long) -> Unit,
   modifier: Modifier = Modifier,
-  popularOnJetFlixMovies: List<Movie>
+  trendingNowMovies: List<Movie>
 ) {
   Column(modifier = modifier) {
     Text(
-      text = "Popular On JetFlix",
+      text = "Trending Now",
       style = TextStyle(
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp,
@@ -36,7 +36,7 @@ fun PopularOnJetFlix(
       modifier = Modifier.padding(start = 8.dp)
     )
     Spacer(modifier = Modifier.height(12.dp))
-    TrendingNowMoviesCarousel(movies = popularOnJetFlixMovies, onMovieSelected = onMovieClick)
+    TrendingNowMoviesCarousel(movies = trendingNowMovies, onMovieSelected = onMovieClick)
   }
 }
 

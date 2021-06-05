@@ -36,6 +36,7 @@ import com.fabler.jetflix.ui.theme.AlphaNearOpaque
 import com.fabler.jetflix.ui.theme.JetFlixTheme
 
 private val TopBarHeight = 80.dp
+private val MovieDetailTopBarHeight = 70.dp
 
 @ExperimentalAnimationApi
 @Composable
@@ -173,7 +174,7 @@ fun MovieDetailAppBar(
   JetFlixSurface(
     modifier = modifier
       .padding(top = 30.dp)
-      .height(TopBarHeight),
+      .height(MovieDetailTopBarHeight),
     color = Color.Black.copy(alpha = 0.5f)
   ) {
     TopAppBar(

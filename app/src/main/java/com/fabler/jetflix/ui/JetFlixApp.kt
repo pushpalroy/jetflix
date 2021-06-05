@@ -36,7 +36,9 @@ import com.fabler.jetflix.ui.components.JetFlixScaffold
 import com.fabler.jetflix.ui.components.JetFlixTopAppBar
 import com.fabler.jetflix.ui.dashboard.DashboardSections
 import com.fabler.jetflix.ui.dashboard.JetFlixBottomBar
-import com.fabler.jetflix.ui.dashboard.home.BottomSheetContent
+import com.fabler.jetflix.ui.dashboard.home.component.BottomSheetContent
+import com.fabler.jetflix.ui.navigation.JetFlixNavGraph
+import com.fabler.jetflix.ui.navigation.MainDestinations
 import com.fabler.jetflix.ui.theme.JetFlixTheme
 import com.fabler.jetflix.ui.viewmodel.ProvideMultiViewModel
 import com.google.accompanist.insets.ProvideWindowInsets

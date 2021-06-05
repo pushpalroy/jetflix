@@ -3,6 +3,7 @@ package com.fabler.jetflix.domain.repo
 import com.fabler.jetflix.BuildConfig
 import com.fabler.jetflix.data.network.service.MoviesService
 import com.fabler.jetflix.domain.model.Movie
+import com.fabler.jetflix.domain.model.MovieVideo
 import com.fabler.jetflix.util.Single
 import com.fabler.jetflix.util.Error
 import com.fabler.jetflix.util.Error.UnexpectedError
@@ -80,6 +81,21 @@ class MoviesRepositoryImpl(
         movieId = movieId,
         apiKey = BuildConfig.API_KEY
       ).asDomainModel()
+      success(result)
+    } catch (e: Exception) {
+      Timber.tag(TAG).e("Exception: ${e.message}")
+      error(UnexpectedError)
+    }
+  }
+
+  override suspend fun getMovieVideosById(
+    movieId: Long
+  ): Single<Error, MovieVideo> {
+    return try {
+      val result = service.getMovieVideosById(
+        movieId = movieId,
+        apiKey = BuildConfig.API_KEY
+      ).results.first().asDomainModel()
       success(result)
     } catch (e: Exception) {
       Timber.tag(TAG).e("Exception: ${e.message}")

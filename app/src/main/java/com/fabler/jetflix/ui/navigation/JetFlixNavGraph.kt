@@ -1,4 +1,4 @@
-package com.fabler.jetflix.ui
+package com.fabler.jetflix.ui.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.lazy.LazyListState
@@ -15,10 +15,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import com.fabler.jetflix.ui.MainDestinations.MOVIE_ID_KEY
 import com.fabler.jetflix.ui.dashboard.DashboardSections
 import com.fabler.jetflix.ui.dashboard.addDashboardGraph
 import com.fabler.jetflix.ui.moviedetail.MovieDetail
+import com.fabler.jetflix.ui.navigation.MainDestinations.MOVIE_ID_KEY
 import kotlinx.coroutines.CoroutineScope
 
 /**
@@ -64,6 +64,7 @@ fun JetFlixNavGraph(
     ) { backStackEntry ->
       val arguments = requireNotNull(backStackEntry.arguments)
       val movieId = arguments.getLong(MOVIE_ID_KEY)
+
       MovieDetail(
         movieId = movieId,
         upPress = {

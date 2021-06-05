@@ -29,6 +29,13 @@ import com.fabler.jetflix.domain.repo.movies
 import com.fabler.jetflix.ui.components.Card
 import com.fabler.jetflix.ui.components.HighlightMovieItem
 import com.fabler.jetflix.ui.components.JetFlixSurface
+import com.fabler.jetflix.ui.dashboard.home.component.InfoButton
+import com.fabler.jetflix.ui.dashboard.home.component.JetFlixOriginals
+import com.fabler.jetflix.ui.dashboard.home.component.MyListButton
+import com.fabler.jetflix.ui.dashboard.home.component.PlayButton
+import com.fabler.jetflix.ui.dashboard.home.component.PopularOnJetFlix
+import com.fabler.jetflix.ui.dashboard.home.component.TrendingNow
+import com.fabler.jetflix.ui.dashboard.home.component.onBottomSheetTapped
 import com.fabler.jetflix.ui.theme.JetFlixTheme
 import com.fabler.jetflix.ui.viewmodel.ViewModelProvider
 import com.fabler.jetflix.util.Resource.Success

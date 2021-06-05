@@ -16,3 +16,11 @@ data class Movie(
   val avgVote: Double,
   val voteCount: Int
 )
+
+data class MovieVideo(
+  val key: String,
+  val url: String,
+  val name: String,
+  val size: Int,
+  val type: String
+)

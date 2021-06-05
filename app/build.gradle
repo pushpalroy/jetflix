@@ -62,6 +62,7 @@ dependencies {
   implementation Libs.AndroidX.Lifecycle.viewModelCompose
 
   implementation Libs.AndroidX.Compose.runtime
+  implementation Libs.AndroidX.Compose.runtimeLiveData
   implementation Libs.AndroidX.Compose.foundation
   implementation Libs.AndroidX.Compose.layout
   implementation Libs.AndroidX.Compose.ui
@@ -89,6 +90,7 @@ dependencies {
 
   implementation Libs.Exoplayer.exoPlayer
   //implementation Libs.Exoplayer.mediaSession
+  implementation Libs.YouTube.jsEvaluator
 
   androidTestImplementation Libs.AndroidX.Compose.uiTestJunit
   debugImplementation Libs.AndroidX.Compose.uiTestManifest

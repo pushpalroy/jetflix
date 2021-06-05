@@ -2,8 +2,8 @@ package com.fabler.jetflix.data.network.service
 
 import com.fabler.jetflix.data.network.constant.MoviesApi
 import com.fabler.jetflix.data.network.model.MovieDetailsDto
-import com.fabler.jetflix.data.network.model.MovieDto
 import com.fabler.jetflix.data.network.model.MoviesDto
+import com.fabler.jetflix.data.network.model.MoviesVideosDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -32,7 +32,13 @@ interface MoviesService {
 
   @GET(MoviesApi.ENDPOINT_MOVIE)
   suspend fun getMovieById(
-    @Path("movieId") movieId: Long,
+    @Path("movie_id") movieId: Long,
     @Query("api_key") apiKey: String
   ): MovieDetailsDto
+
+  @GET(MoviesApi.ENDPOINT_MOVIE_VIDEO)
+  suspend fun getMovieVideosById(
+    @Path("movie_id") movieId: Long,
+    @Query("api_key") apiKey: String
+  ): MoviesVideosDto
 }

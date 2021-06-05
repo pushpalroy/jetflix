@@ -1,4 +1,4 @@
-package com.fabler.jetflix.ui.viewmodel
+package com.fabler.jetflix.ui.dashboard.home.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

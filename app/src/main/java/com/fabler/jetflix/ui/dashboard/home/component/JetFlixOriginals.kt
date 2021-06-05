@@ -1,4 +1,4 @@
-package com.fabler.jetflix.ui.dashboard.home
+package com.fabler.jetflix.ui.dashboard.home.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,18 +15,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.fabler.jetflix.domain.model.Movie
-import com.fabler.jetflix.ui.components.SmallMovieItem
+import com.fabler.jetflix.ui.components.LargeMovieItem
 import com.fabler.jetflix.ui.theme.JetFlixTheme
 
 @Composable
-fun TrendingNow(
+fun JetFlixOriginals(
   onMovieClick: (Long) -> Unit,
   modifier: Modifier = Modifier,
-  trendingNowMovies: List<Movie>
+  jetFlixOriginalMovies: List<Movie>
 ) {
   Column(modifier = modifier) {
     Text(
-      text = "Trending Now",
+      text = "Jetflix Originals",
       style = TextStyle(
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp,
@@ -36,7 +36,7 @@ fun TrendingNow(
       modifier = Modifier.padding(start = 8.dp)
     )
     Spacer(modifier = Modifier.height(12.dp))
-    TrendingNowMoviesCarousel(movies = trendingNowMovies, onMovieSelected = onMovieClick)
+    TrendingNowMoviesCarousel(movies = jetFlixOriginalMovies, onMovieSelected = onMovieClick)
   }
 }
 
@@ -47,7 +47,7 @@ private fun TrendingNowMoviesCarousel(
 ) {
   LazyRow(modifier = Modifier.padding(start = 8.dp)) {
     items(movies) { movie ->
-      SmallMovieItem(movie, onMovieSelected = onMovieSelected)
+      LargeMovieItem(movie, onMovieSelected = onMovieSelected)
       Spacer(modifier = Modifier.width(8.dp))
     }
   }

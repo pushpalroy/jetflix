@@ -1,4 +1,4 @@
-package com.fabler.jetflix.ui.components
+package com.fabler.jetflix.ui.moviedetail.component
 
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT

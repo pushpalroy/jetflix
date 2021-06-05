@@ -3,9 +3,12 @@ package com.fabler.jetflix.ui.moviedetail
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.platform.LocalContext
 import com.fabler.jetflix.ui.components.MovieDetailAppBar
-import com.fabler.jetflix.ui.components.VideoPlayer
-import timber.log.Timber
+import com.fabler.jetflix.ui.moviedetail.component.VideoPlayer
+import com.fabler.jetflix.ui.viewmodel.ViewModelProvider
 
 @ExperimentalAnimationApi
 @Composable
@@ -15,7 +18,23 @@ fun MovieDetail(
 ) {
   Column {
     MovieDetailAppBar(upPress = upPress)
-    VideoPlayer(url = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4")
-    Timber.d("MovieId: $movieId")
+
+    ViewModelProvider.movieVideoByIdViewModel.fetchMovieVideoById(movieId = movieId)
+    val movieVideo: String by ViewModelProvider.movieVideoByIdViewModel.movieVideo
+      .observeAsState("")
+    if (movieVideo.isNotEmpty()) {
+      MovieVideo(videoUrl = movieVideo)
+    }
+  }
+}
+
+@Composable
+fun MovieVideo(videoUrl: String) {
+  ViewModelProvider.videoViewModel.extract(LocalContext.current, youtubeLink = videoUrl)
+  val extractedVideoUrl: String by ViewModelProvider.videoViewModel.extractedVideoUrl
+    .observeAsState("")
+
+  if (extractedVideoUrl.isNotEmpty()) {
+    VideoPlayer(url = extractedVideoUrl)
   }
 }
