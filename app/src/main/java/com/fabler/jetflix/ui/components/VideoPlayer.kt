@@ -1,0 +1,62 @@
+package com.fabler.jetflix.ui.components
+
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.FrameLayout
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.viewinterop.AndroidView
+import com.google.android.exoplayer2.C
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
+import com.google.android.exoplayer2.ui.PlayerView
+import com.google.android.exoplayer2.upstream.DataSource
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.util.Util
+
+@Composable
+fun VideoPlayer(url: String) {
+  val context = LocalContext.current
+
+  val exoPlayer = remember {
+    SimpleExoPlayer.Builder(context)
+      .build()
+      .apply {
+        val dataSourceFactory: DataSource.Factory = DefaultDataSourceFactory(
+          context,
+          Util.getUserAgent(context, context.packageName)
+        )
+
+        val mediaItem = MediaItem.fromUri(url)
+        val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
+          .createMediaSource(mediaItem)
+        this.setMediaSource(mediaSource, true)
+        this.prepare()
+      }
+  }
+
+  exoPlayer.playWhenReady = true
+  exoPlayer.videoScalingMode = C.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING
+  exoPlayer.repeatMode = Player.REPEAT_MODE_ONE
+
+  DisposableEffect(
+    AndroidView(factory = {
+      PlayerView(context).apply {
+        useController = true
+        resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
+
+        player = exoPlayer
+        layoutParams = FrameLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+      }
+    })
+  ) {
+    onDispose {
+      exoPlayer.release()
+    }
+  }
+}

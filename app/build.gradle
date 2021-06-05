@@ -87,8 +87,8 @@ dependencies {
   implementation Libs.ConstraintLayout.constraintLayout
   implementation Libs.Logging.timber
 
-  //  implementation Libs.Exoplayer.exoPlayer
-  //  implementation Libs.Exoplayer.mediaSession
+  implementation Libs.Exoplayer.exoPlayer
+  //implementation Libs.Exoplayer.mediaSession
 
   androidTestImplementation Libs.AndroidX.Compose.uiTestJunit
   debugImplementation Libs.AndroidX.Compose.uiTestManifest

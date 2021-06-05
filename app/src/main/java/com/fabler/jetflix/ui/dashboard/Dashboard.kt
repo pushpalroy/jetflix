@@ -1,6 +1,7 @@
 package com.fabler.jetflix.ui.dashboard
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
@@ -47,6 +48,18 @@ import com.fabler.jetflix.ui.dashboard.home.Home
 import com.fabler.jetflix.ui.theme.JetFlixTheme
 import kotlinx.coroutines.CoroutineScope
 
+enum class DashboardSections(
+  @StringRes val title: Int,
+  val icon: ImageVector,
+  val route: String
+) {
+  HOME(R.string.dashboard_home, Icons.Default.Home, "dashboard/home"),
+  PLAY_SOMETHING(R.string.dashboard_play, Icons.Default.Shuffle, "dashboard/play"),
+  COMING_SOON(R.string.dashboard_coming_soon, Icons.Outlined.PlayCircle, "dashboard/coming_soon"),
+  DOWNLOADS(R.string.dashboard_downloads, Icons.Default.Downloading, "dashboard/downloads")
+}
+
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 fun NavGraphBuilder.addDashboardGraph(
   bottomSheetScaffoldState: BottomSheetScaffoldState,
@@ -57,17 +70,6 @@ fun NavGraphBuilder.addDashboardGraph(
   composable(DashboardSections.HOME.route) {
     Home(bottomSheetScaffoldState, modifier, coroutineScope, listState)
   }
-}
-
-enum class DashboardSections(
-  @StringRes val title: Int,
-  val icon: ImageVector,
-  val route: String
-) {
-  HOME(R.string.dashboard_home, Icons.Default.Home, "dashboard/home"),
-  PLAY_SOMETHING(R.string.dashboard_play, Icons.Default.Shuffle, "dashboard/play"),
-  COMING_SOON(R.string.dashboard_coming_soon, Icons.Outlined.PlayCircle, "dashboard/coming_soon"),
-  DOWNLOADS(R.string.dashboard_downloads, Icons.Default.Downloading, "dashboard/downloads")
 }
 
 @Composable

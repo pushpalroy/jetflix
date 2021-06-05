@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.BottomSheetScaffold
+import androidx.compose.material.BottomSheetScaffoldState
 import androidx.compose.material.BottomSheetState
 import androidx.compose.material.BottomSheetValue.Collapsed
 import androidx.compose.material.ExperimentalMaterialApi
@@ -21,6 +22,7 @@ import androidx.compose.material.icons.filled.Shuffle
 import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -38,6 +40,7 @@ import com.fabler.jetflix.ui.dashboard.home.BottomSheetContent
 import com.fabler.jetflix.ui.theme.JetFlixTheme
 import com.fabler.jetflix.ui.viewmodel.ProvideMultiViewModel
 import com.google.accompanist.insets.ProvideWindowInsets
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @ExperimentalAnimationApi
@@ -48,6 +51,7 @@ fun JetFlixApp() {
     JetFlixTheme {
       ProvideMultiViewModel {
 
+        val (shouldShowAppBar, updateAppBarVisibility) = remember { mutableStateOf(true) }
         val navController = rememberNavController()
         val tabs = remember { DashboardSections.values() }
         val bottomSheetCoroutineScope = rememberCoroutineScope()
@@ -66,12 +70,12 @@ fun JetFlixApp() {
           sheetContent = {
             BottomSheetContent(
               onMovieClick = { movieId: Long ->
+                closeBottomSheet(bottomSheetCoroutineScope, bottomSheetScaffoldState)
+                updateAppBarVisibility(false)
                 navController.navigate("${MainDestinations.MOVIE_DETAIL_ROUTE}/$movieId")
               },
               onBottomSheetClosePressed = {
-                bottomSheetCoroutineScope.launch {
-                  bottomSheetScaffoldState.bottomSheetState.collapse()
-                }
+                closeBottomSheet(bottomSheetCoroutineScope, bottomSheetScaffoldState)
               }
             )
           },
@@ -79,7 +83,11 @@ fun JetFlixApp() {
         ) {
           JetFlixScaffold(
             bottomBar = { JetFlixBottomBar(navController = navController, tabs = tabs) },
-            fab = { PlaySomethingFAB(isScrolledUp = isScrolledDown.value.not()) }
+            fab = {
+              if (shouldShowAppBar) {
+                PlaySomethingFAB(isScrolledUp = isScrolledDown.value.not())
+              }
+            }
           ) { innerPaddingModifier ->
 
             JetFlixNavGraph(
@@ -87,15 +95,28 @@ fun JetFlixApp() {
               modifier = Modifier.padding(innerPaddingModifier),
               bottomSheetScaffoldState = bottomSheetScaffoldState,
               coroutineScope = bottomSheetCoroutineScope,
-              listState = listState
+              listState = listState,
+              updateAppBarVisibility = updateAppBarVisibility
             )
-            JetFlixTopAppBar(
-              isScrolledDown = isScrolledDown.value
-            )
+            if (shouldShowAppBar) {
+              JetFlixTopAppBar(
+                isScrolledDown = isScrolledDown.value,
+              )
+            }
           }
         }
       }
     }
+  }
+}
+
+@ExperimentalMaterialApi
+private fun closeBottomSheet(
+  bottomSheetCoroutineScope: CoroutineScope,
+  bottomSheetScaffoldState: BottomSheetScaffoldState
+) {
+  bottomSheetCoroutineScope.launch {
+    bottomSheetScaffoldState.bottomSheetState.collapse()
   }
 }
 
