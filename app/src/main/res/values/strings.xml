@@ -10,10 +10,15 @@
   <string name="movie_detail">Detail</string>
 
   <string name="my_list">My List</string>
+  <string name="rate">Rate</string>
+  <string name="share">Share</string>
   <string name="play">Play</string>
   <string name="info">Info</string>
   <string name="download">Download</string>
   <string name="preview">Preview</string>
   <string name="episodesAndInfo">Episodes &amp; Info</string>
   <string name="unexpected_error">An unexpected error occurred :(\nPlease try again</string>
+
+  <string name="more_like_this">MORE LIKE THIS</string>
+  <string name="trailers_and_more">TRAILERS &amp; MORE</string>
 </resources>

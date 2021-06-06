@@ -3,10 +3,14 @@ package com.fabler.jetflix.ui.moviedetail.component
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.FrameLayout
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.MediaItem
@@ -45,15 +49,18 @@ fun VideoPlayer(url: String) {
   exoPlayer.repeatMode = Player.REPEAT_MODE_ONE
 
   DisposableEffect(
-    AndroidView(factory = {
-      PlayerView(context).apply {
-        useController = true
-        resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
+    AndroidView(
+      factory = {
+        PlayerView(context).apply {
+          useController = true
+          resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
 
-        player = exoPlayer
-        layoutParams = FrameLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
-      }
-    })
+          player = exoPlayer
+          layoutParams = FrameLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+        }
+      },
+      modifier = Modifier.fillMaxWidth()
+    )
   ) {
     onDispose {
       exoPlayer.release()

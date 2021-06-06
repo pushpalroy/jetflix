@@ -50,7 +50,7 @@ private val LightColorPalette = JetFlixColorPalette(
 
 private val DarkColorPalette = JetFlixColorPalette(
   brand = Shadow1,
-  accent = DeepGreen,
+  accent = Red,
   accentDark = DarkGreen,
   iconTint = Grey,
   appBackground = AlmostBlack,

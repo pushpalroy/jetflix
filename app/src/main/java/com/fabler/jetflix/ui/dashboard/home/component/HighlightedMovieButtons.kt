@@ -15,6 +15,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.Icons.Outlined
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.Composable
@@ -76,14 +77,15 @@ fun InfoButton(
 @Composable
 fun PlayButton(
   isPressed: MutableState<Boolean>,
-  modifier: Modifier
+  modifier: Modifier,
+  cornerPercent: Int = 8
 ) {
   Button(
     onClick = { isPressed.value = isPressed.value.not() },
     colors = ButtonDefaults.buttonColors(
       backgroundColor = Color.White
     ),
-    shape = RoundedCornerShape(8),
+    shape = RoundedCornerShape(cornerPercent),
     modifier = modifier
   )
   {
@@ -102,6 +104,43 @@ fun PlayButton(
         fontWeight = FontWeight.SemiBold,
         letterSpacing = (-0.05).sp,
         color = JetFlixTheme.colors.textInteractive,
+        style = MaterialTheme.typography.button,
+        maxLines = 1
+      )
+    }
+  }
+}
+
+@Composable
+fun DownloadButton(
+  isPressed: MutableState<Boolean>,
+  modifier: Modifier,
+  cornerPercent: Int = 8
+) {
+  Button(
+    onClick = { isPressed.value = isPressed.value.not() },
+    colors = ButtonDefaults.buttonColors(
+      backgroundColor = JetFlixTheme.colors.uiLightBackground
+    ),
+    shape = RoundedCornerShape(cornerPercent),
+    modifier = modifier
+  )
+  {
+    Row(
+      verticalAlignment = Alignment.CenterVertically,
+    ) {
+      Icon(
+        imageVector = Icons.Default.Download,
+        tint = Color.White,
+        contentDescription = null
+      )
+      Spacer(modifier = Modifier.width(4.dp))
+      Text(
+        text = stringResource(string.download),
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Normal,
+        letterSpacing = (-0.05).sp,
+        color = Color.White,
         style = MaterialTheme.typography.button,
         maxLines = 1
       )
