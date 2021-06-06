@@ -4,6 +4,7 @@ import com.fabler.jetflix.data.network.constant.MoviesApi
 import com.fabler.jetflix.data.network.model.MovieDetailsDto
 import com.fabler.jetflix.data.network.model.MoviesDto
 import com.fabler.jetflix.data.network.model.MoviesVideosDto
+import com.fabler.jetflix.data.network.model.SimilarMoviesDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -41,4 +42,10 @@ interface MoviesService {
     @Path("movie_id") movieId: Long,
     @Query("api_key") apiKey: String
   ): MoviesVideosDto
+
+  @GET(MoviesApi.ENDPOINT_SIMILAR_MOVIES)
+  suspend fun getSimilarMovies(
+    @Path("movie_id") movieId: Long,
+    @Query("api_key") apiKey: String
+  ): SimilarMoviesDto
 }

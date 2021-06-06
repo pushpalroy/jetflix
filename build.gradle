@@ -27,8 +27,6 @@ subprojects {
         url "https://androidx.dev/snapshots/builds/${Libs.AndroidX.Compose.snapshot}/artifacts/ui/repository/"
       }
     }
-
-    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
   }
 
   tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {

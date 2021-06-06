@@ -89,8 +89,9 @@ dependencies {
   implementation Libs.Logging.timber
 
   implementation Libs.Exoplayer.exoPlayer
-  //implementation Libs.Exoplayer.mediaSession
   implementation Libs.YouTube.jsEvaluator
+
+  implementation Libs.LottieView.lottieCompose
 
   androidTestImplementation Libs.AndroidX.Compose.uiTestJunit
   debugImplementation Libs.AndroidX.Compose.uiTestManifest

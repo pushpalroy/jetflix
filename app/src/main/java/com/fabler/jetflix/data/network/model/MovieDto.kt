@@ -52,3 +52,37 @@ data class MovieDto(
     voteCount = voteCount
   )
 }
+
+data class SimilarMoviesDto(
+  val results: List<SimilarMovieDto>
+)
+
+data class SimilarMovieDto(
+  val id: Int,
+  val adult: Boolean,
+  @SerializedName("backdrop_path")
+  val backDropPath: String,
+  @SerializedName("poster_path")
+  val posterPath: String,
+  @SerializedName("original_language")
+  val originalLanguage: String,
+  val title: String,
+  val overview: String,
+  val video: Boolean,
+) {
+  fun asDomainModel() = Movie(
+    id = id.toLong(),
+    isAdult = adult,
+    backDropUrl = MoviesApi.IMAGE_BASE_URL_W500 + backDropPath,
+    posterUrl = MoviesApi.IMAGE_BASE_URL_W500 + posterPath,
+    genreIds = listOf(),
+    language = originalLanguage,
+    title = title,
+    overview = overview,
+    popularity = 0.0,
+    releaseDate = "",
+    isVideoAvailable = video,
+    avgVote = 0.0,
+    voteCount = 0
+  )
+}

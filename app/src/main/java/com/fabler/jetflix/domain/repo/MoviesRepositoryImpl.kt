@@ -4,9 +4,9 @@ import com.fabler.jetflix.BuildConfig
 import com.fabler.jetflix.data.network.service.MoviesService
 import com.fabler.jetflix.domain.model.Movie
 import com.fabler.jetflix.domain.model.MovieVideo
-import com.fabler.jetflix.util.Single
 import com.fabler.jetflix.util.Error
 import com.fabler.jetflix.util.Error.UnexpectedError
+import com.fabler.jetflix.util.Single
 import com.fabler.jetflix.util.error
 import com.fabler.jetflix.util.success
 import timber.log.Timber
@@ -96,6 +96,21 @@ class MoviesRepositoryImpl(
         movieId = movieId,
         apiKey = BuildConfig.API_KEY
       ).results.first().asDomainModel()
+      success(result)
+    } catch (e: Exception) {
+      Timber.tag(TAG).e("Exception: ${e.message}")
+      error(UnexpectedError)
+    }
+  }
+
+  override suspend fun getSimilarMovies(
+    movieId: Long
+  ): Single<Error, List<Movie>> {
+    return try {
+      val result = service.getSimilarMovies(
+        movieId = movieId,
+        apiKey = BuildConfig.API_KEY
+      ).results.map { it.asDomainModel() }
       success(result)
     } catch (e: Exception) {
       Timber.tag(TAG).e("Exception: ${e.message}")

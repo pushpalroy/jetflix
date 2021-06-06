@@ -29,4 +29,8 @@ interface MoviesRepository {
   suspend fun getMovieVideosById(
     movieId: Long
   ): Single<Error, MovieVideo>
+
+  suspend fun getSimilarMovies(
+    movieId: Long
+  ): Single<Error, List<Movie>>
 }

@@ -9,7 +9,8 @@ import androidx.compose.ui.unit.sp
 import com.fabler.jetflix.R.font
 
 private val ProductSans = FontFamily(
-  Font(font.product_sans_regular, FontWeight.Normal),
+  Font(font.netflix_sans_light, FontWeight.Normal),
+  Font(font.netflix_sans_light, FontWeight.Light),
   Font(font.product_sans_bold, FontWeight.Bold)
 )
 

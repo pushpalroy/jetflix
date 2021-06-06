@@ -8,6 +8,7 @@ object MoviesApi {
   const val ENDPOINT_NOW_PLAYING = "movie/now_playing"
   const val ENDPOINT_MOVIE = "movie/{movie_id}"
   const val ENDPOINT_MOVIE_VIDEO = "movie/{movie_id}/videos"
+  const val ENDPOINT_SIMILAR_MOVIES = "movie/{movie_id}/similar"
 
   const val LANG_ENG = "en-US"
   const val IMAGE_BASE_URL_W500 = "https://image.tmdb.org/t/p/w500"

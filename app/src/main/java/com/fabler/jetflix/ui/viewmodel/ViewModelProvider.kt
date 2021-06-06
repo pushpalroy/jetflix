@@ -8,7 +8,7 @@ import com.fabler.jetflix.ui.dashboard.home.viewmodel.MovieByIdViewModel
 import com.fabler.jetflix.ui.dashboard.home.viewmodel.NowPlayingMoviesViewModel
 import com.fabler.jetflix.ui.dashboard.home.viewmodel.PopularMoviesViewModel
 import com.fabler.jetflix.ui.dashboard.home.viewmodel.TopRatedMoviesViewModel
-import com.fabler.jetflix.ui.moviedetail.viewmodel.MovieVideoByIdViewModel
+import com.fabler.jetflix.ui.moviedetail.viewmodel.MovieVideosViewModel
 import com.fabler.jetflix.ui.moviedetail.viewmodel.VideoViewModel
 
 object ViewModelProvider {
@@ -36,7 +36,7 @@ object ViewModelProvider {
     @Composable
     get() = LocalVideoViewModel.current
 
-  val movieVideoByIdViewModel: MovieVideoByIdViewModel
+  val movieVideosViewModel: MovieVideosViewModel
     @Composable
     get() = LocalMovieVideoByIdViewModel.current
 }
@@ -49,7 +49,7 @@ fun ProvideMultiViewModel(content: @Composable () -> Unit) {
   val movieByIdVM: MovieByIdViewModel = viewModel()
   val selectedMovieVM: SelectedMovieViewModel = viewModel()
   val videoVM: VideoViewModel = viewModel()
-  val movieVideoByIdVM: MovieVideoByIdViewModel = viewModel()
+  val movieVideosVM: MovieVideosViewModel = viewModel()
 
   CompositionLocalProvider(
     LocalTopRatedMoviesViewModel provides topRatedMoviesVM,
@@ -70,7 +70,7 @@ fun ProvideMultiViewModel(content: @Composable () -> Unit) {
               LocalVideoViewModel provides videoVM
             ) {
               CompositionLocalProvider(
-                LocalMovieVideoByIdViewModel provides movieVideoByIdVM,
+                LocalMovieVideoByIdViewModel provides movieVideosVM,
               ) {
                 content()
               }
@@ -106,6 +106,6 @@ private val LocalVideoViewModel = staticCompositionLocalOf<VideoViewModel> {
   error("No VideoViewModel provided")
 }
 
-private val LocalMovieVideoByIdViewModel = staticCompositionLocalOf<MovieVideoByIdViewModel> {
+private val LocalMovieVideoByIdViewModel = staticCompositionLocalOf<MovieVideosViewModel> {
   error("No MovieVideoByIdViewModel provided")
 }
