@@ -17,7 +17,10 @@ import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.fabler.jetflix.ui.dashboard.DashboardSections
+import com.fabler.jetflix.ui.dashboard.comingSoon.ComingSoon
+import com.fabler.jetflix.ui.dashboard.downloads.Downloads
 import com.fabler.jetflix.ui.dashboard.home.Home
+import com.fabler.jetflix.ui.dashboard.playSomething.PlaySomething
 import com.fabler.jetflix.ui.moviedetail.MovieDetail
 import com.fabler.jetflix.ui.navigation.MainDestinations.MOVIE_ID_KEY
 import kotlinx.coroutines.CoroutineScope
@@ -58,6 +61,15 @@ fun NavGraph(
           coroutineScope = bottomSheetCoroutineScope,
           scrollState = homeScreenScrollState
         )
+      }
+      composable(DashboardSections.PLAY_SOMETHING.route) {
+        PlaySomething()
+      }
+      composable(DashboardSections.COMING_SOON.route) {
+        ComingSoon()
+      }
+      composable(DashboardSections.DOWNLOADS.route) {
+        Downloads()
       }
     }
     composable(
