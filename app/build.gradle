@@ -55,6 +55,7 @@ android {
 }
 
 dependencies {
+  implementation project(':youtubeextractor')
   implementation Libs.Kotlin.stdlib
   implementation Libs.AndroidX.coreKtx
   implementation Libs.AndroidX.navigation
@@ -89,7 +90,6 @@ dependencies {
   implementation Libs.Logging.timber
 
   implementation Libs.Exoplayer.exoPlayer
-  implementation Libs.YouTube.jsEvaluator
 
   implementation Libs.LottieView.lottieCompose
 

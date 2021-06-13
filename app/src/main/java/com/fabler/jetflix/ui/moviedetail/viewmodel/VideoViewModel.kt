@@ -7,9 +7,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.fabler.jetflix.data.network.constant.MoviesApi.SAMPLE_VIDEO_URL
-import com.fabler.jetflix.ui.moviedetail.viewmodel.lib.VideoMeta
-import com.fabler.jetflix.ui.moviedetail.viewmodel.lib.YouTubeExtractor
-import com.fabler.jetflix.ui.moviedetail.viewmodel.lib.YtFile
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -22,8 +19,8 @@ class VideoViewModel @Inject constructor() : ViewModel() {
   @SuppressLint("StaticFieldLeak")
   fun extract(context: Context, youtubeLink: String) {
 
-    object : YouTubeExtractor(context) {
-      override fun onExtractionComplete(ytFiles: SparseArray<YtFile>?, vMeta: VideoMeta?) {
+    object : com.fabler.youtubeextractor.YouTubeExtractor(context) {
+      override fun onExtractionComplete(ytFiles: SparseArray<com.fabler.youtubeextractor.YtFile>?, vMeta: com.fabler.youtubeextractor.VideoMeta?) {
         if (ytFiles != null) {
           val iTag = 22
           val streamUrl = ytFiles[iTag]?.url

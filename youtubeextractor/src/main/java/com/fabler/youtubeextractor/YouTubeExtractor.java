@@ -1,4 +1,4 @@
-package com.fabler.jetflix.ui.moviedetail.viewmodel.lib;
+package com.fabler.youtubeextractor;
 
 import android.content.Context;
 import android.os.AsyncTask;

@@ -37,10 +37,6 @@ object Libs {
     const val mediaSession = "com.google.android.exoplayer:extension-mediasessio:$exoVersion"
   }
 
-  object YouTube {
-    const val jsEvaluator = "com.github.evgenyneu:js-evaluator-for-android:v5.0.0"
-  }
-
   object Kotlin {
     const val version = "1.5.10"
     const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"

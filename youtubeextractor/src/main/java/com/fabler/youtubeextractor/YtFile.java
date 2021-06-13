@@ -1,4 +1,4 @@
-package com.fabler.jetflix.ui.moviedetail.viewmodel.lib;
+package com.fabler.youtubeextractor;
 
 public class YtFile {
 
