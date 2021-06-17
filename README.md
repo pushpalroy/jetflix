@@ -4,7 +4,7 @@ A clone of Android NetFlix app in Android built using Jetpack compose.
 
 <div align="left">
     <a href = "https://developer.android.com/jetpack/androidx/versions/all-channel#may_5_2021">
-        <img src = "https://img.shields.io/badge/Jetpack%20Compose-1.0.0%20beta08-brightgreen" />
+        <img src = "https://img.shields.io/badge/Jetpack%20Compose-1.0.0%20beta09-brightgreen" />
     </a>
 </div>
 <br>
