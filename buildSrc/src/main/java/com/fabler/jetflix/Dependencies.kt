@@ -1,4 +1,4 @@
-package com.fabler.jetflix.buildsrc
+package com.fabler.jetflix
 
 object Versions {
   const val ktlint = "0.41.0"
@@ -10,14 +10,14 @@ object Libs {
   const val junit = "junit:junit:4.13"
 
   object Accompanist {
-    const val version = "0.10.0"
+    const val version = "0.12.0"
     const val coil = "com.google.accompanist:accompanist-coil:$version"
     const val insets = "com.google.accompanist:accompanist-insets:$version"
     const val systemuicontroller = "com.google.accompanist:accompanist-systemuicontroller:$version"
   }
 
   object Hilt {
-    private const val hiltVersion = "2.36"
+    private const val hiltVersion = "2.37"
     const val hiltAndroidGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
     const val android = "com.google.dagger:hilt-android:$hiltVersion"
     const val lifecycleViewModel = "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
@@ -61,19 +61,19 @@ object Libs {
   object AndroidX {
     private const val appCompatVer = "1.3.0"
     private const val coreKtxVer = "1.6.0-alpha03"
-    private const val navComposeVer = "2.4.0-alpha01"
+    private const val navComposeVer = "2.4.0-alpha03"
     const val appcompat = "androidx.appcompat:$appCompatVer"
     const val coreKtx = "androidx.core:core-ktx:$coreKtxVer"
     const val navigation = "androidx.navigation:navigation-compose:$navComposeVer"
 
     object Activity {
-      private const val activityComposeVer = "1.3.0-alpha08"
+      private const val activityComposeVer = "1.3.0-beta02"
       const val activityCompose = "androidx.activity:activity-compose:$activityComposeVer"
     }
 
     object Compose {
       const val snapshot = ""
-      const val composeVer = "1.0.0-beta08"
+      const val composeVer = "1.0.0-beta09"
 
       const val runtime = "androidx.compose.runtime:runtime:$composeVer"
       const val runtimeLiveData = "androidx.compose.runtime:runtime-livedata:$composeVer"
@@ -85,7 +85,7 @@ object Libs {
       const val animation = "androidx.compose.animation:animation:${composeVer}"
       const val tooling = "androidx.compose.ui:ui-tooling:${composeVer}"
       const val iconsExtended = "androidx.compose.material:material-icons-extended:$composeVer"
-      const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha07"
+      const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha08"
 
       // Test rules and transitive dependencies
       const val uiTestJunit = "androidx.compose.ui:ui-test-junit4:$composeVer"
@@ -95,7 +95,7 @@ object Libs {
     }
 
     object Lifecycle {
-      private const val vmComposeVer = "1.0.0-alpha05"
+      private const val vmComposeVer = "1.0.0-alpha07"
       const val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:$vmComposeVer"
     }
 

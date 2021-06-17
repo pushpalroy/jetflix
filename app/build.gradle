@@ -1,4 +1,4 @@
-import com.fabler.jetflix.buildsrc.Libs
+import com.fabler.jetflix.Libs
 
 plugins {
   id 'com.android.application'
