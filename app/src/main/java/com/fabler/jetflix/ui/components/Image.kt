@@ -8,14 +8,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberImagePainter
 import com.fabler.jetflix.ui.theme.JetFlixTheme
-import com.google.accompanist.coil.rememberCoilPainter
 
 @Composable
 fun CircularRemoteImage(
@@ -30,8 +30,8 @@ fun CircularRemoteImage(
     modifier = modifier
   ) {
     Image(
-      painter = rememberCoilPainter(
-        request = imageUrl
+      painter = rememberImagePainter(
+        data = imageUrl
       ),
       contentScale = ContentScale.Crop,
       modifier = Modifier.fillMaxSize(),
@@ -75,8 +75,8 @@ fun RoundedCornerRemoteImage(
     modifier = modifier
   ) {
     Image(
-      painter = rememberCoilPainter(
-        request = imageUrl
+      painter = rememberImagePainter(
+        data = imageUrl
       ),
       contentScale = ContentScale.Crop,
       modifier = Modifier.fillMaxSize(),
@@ -97,8 +97,8 @@ fun FullScreenRemoteImage(
     modifier = modifier
   ) {
     Image(
-      painter = rememberCoilPainter(
-        request = imageUrl
+      painter = rememberImagePainter(
+        data = imageUrl
       ),
       contentScale = ContentScale.Crop,
       modifier = Modifier.fillMaxSize(),
